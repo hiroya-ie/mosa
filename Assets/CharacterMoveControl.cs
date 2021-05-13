@@ -70,7 +70,7 @@ public class CharacterMoveControl : MonoBehaviour
         //加速（実験）
         if (Input.GetKey("l"))
         {
-            characterPhysics.AddForce(transform.forward * 1);
+            characterPhysics.AddForce(transform.forward * 5);
         }
         FlyControl();
     }
@@ -81,11 +81,12 @@ public class CharacterMoveControl : MonoBehaviour
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
         //主翼の揚力
-        float attackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
+        float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
         float speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
-        characterPhysics.AddForce(transform.up * attackAngle * speed/300);
-        Debug.Log(attackAngle);
+        characterPhysics.AddForce(transform.up * mainAttackAngle * speed/160);
         //垂直尾翼
-
+        float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
+        characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
+        Debug.Log(tailAttackAngle);
     }
 }
