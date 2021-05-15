@@ -14,11 +14,11 @@ public class CharacterMoveControl : MonoBehaviour
     int Ysensitivity = 10000;//縦方向の感度
     float XtorqueVelocity;
     float YtorqueVelocity;
+    public GameObject body;
+    float speed;
     public void AttitudeControl()
     {
         /*ドラッグを検出して基本姿勢に反映する。*/
-        //////////////////////////////////////////////////スピードで応答性を変える
-        //ドラッグの範囲に限界を設ける
         Vector3 dragVector = new Vector3(0,0,0);
         //ドラッグを取得
         if (Input.GetMouseButtonDown(0))
@@ -48,6 +48,25 @@ public class CharacterMoveControl : MonoBehaviour
         {
             dragVector.x = 200;
         }
+
+        //ドラッグの限界を設ける
+        if (dragVector.y > 200)
+        {
+            dragVector.y = 200;
+        }else if(dragVector.y < -200)
+        {
+            dragVector.y = -200;
+        }
+        if(dragVector.x > 200)
+        {
+            dragVector.x = 200;
+        }else if(dragVector.x < -200)
+        {
+            dragVector.x = -200;
+        }
+        //スピードによって操作の応答性を変える
+        dragVector *= speed / 100;
+
         
 
         //基本姿勢を変換
@@ -66,6 +85,7 @@ public class CharacterMoveControl : MonoBehaviour
         //transform.rotation = Quaternion.Euler(basicAttitude);
         //キャラクターに反映（実験）
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
+        characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
         //加速（実験）
         if (Input.GetKey("l"))
@@ -82,11 +102,16 @@ public class CharacterMoveControl : MonoBehaviour
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
         //主翼の揚力
         float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
-        float speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
+        speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
         characterPhysics.AddForce(transform.up * mainAttackAngle * speed/160);
-        //垂直尾翼
+        //垂直尾翼。横にスライドしないようにし、進行方向に頭を向ける
         float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
         characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
-        Debug.Log(tailAttackAngle);
+        characterPhysics.AddTorque(transform.up * -tailAttackAngle * speed / 320);
+        //速度によって姿勢を変える。（失速時は下を向く）
+        if(-0.1f * speed + 10f >= 0){
+            characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10)* Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
+        }
+
     }
 }
