@@ -12,15 +12,13 @@ public class CharacterMoveControl : MonoBehaviour
     float K = 0.01f; //空気抵抗の比例係数
     int Xsensitivity = 5000;//横方向の感度
     int Ysensitivity = 10000;//縦方向の感度
-    int isNear;
     float XtorqueVelocity;
     float YtorqueVelocity;
-    
+    public GameObject body;
+    float speed;
     public void AttitudeControl()
     {
         /*ドラッグを検出して基本姿勢に反映する。*/
-        //////////////////////////////////////////////////スピードで応答性を変える
-        //ドラッグの範囲に限界を設ける
         Vector3 dragVector = new Vector3(0,0,0);
         //ドラッグを取得
         if (Input.GetMouseButtonDown(0))
@@ -50,6 +48,25 @@ public class CharacterMoveControl : MonoBehaviour
         {
             dragVector.x = 200;
         }
+
+        //ドラッグの限界を設ける
+        if (dragVector.y > 200)
+        {
+            dragVector.y = 200;
+        }else if(dragVector.y < -200)
+        {
+            dragVector.y = -200;
+        }
+        if(dragVector.x > 200)
+        {
+            dragVector.x = 200;
+        }else if(dragVector.x < -200)
+        {
+            dragVector.x = -200;
+        }
+        //スピードによって操作の応答性を変える
+        dragVector *= speed / 100;
+
         
 
         //基本姿勢を変換
@@ -68,23 +85,14 @@ public class CharacterMoveControl : MonoBehaviour
         //transform.rotation = Quaternion.Euler(basicAttitude);
         //キャラクターに反映（実験）
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
+        characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
         //加速（実験）
         if (Input.GetKey("l"))
         {
-            characterPhysics.AddForce(transform.forward * 500);
-        }
-        //ニアミス判定実験
-        if (Input.GetKey("o"))
-        {
-            isNear = 1;//左仮)
-        }
-        else if (Input.GetKey("p"))
-        {
-            isNear = 2;//右(仮)
+            characterPhysics.AddForce(transform.forward * 5);
         }
         FlyControl();
-        
     }
 
     public void FlyControl()
@@ -93,35 +101,17 @@ public class CharacterMoveControl : MonoBehaviour
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
         //主翼の揚力
-        float attackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
-        float speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
-        characterPhysics.AddForce(transform.up * attackAngle * speed/300);
-        Debug.Log(attackAngle);
-        //垂直尾翼
-        MotionControl();
-    }
-    
-    public void MotionControl()
-    {
-        //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
-        GameObject Body = GameObject.Find("Body");
-        if (isNear == 1)
-        {
-            //左に回転
-            Body.transform.Rotate(0, 0, 5);
-            isNear = 0;
+        float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
+        speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
+        characterPhysics.AddForce(transform.up * mainAttackAngle * speed/160);
+        //垂直尾翼。横にスライドしないようにし、進行方向に頭を向ける
+        float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
+        characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
+        characterPhysics.AddTorque(transform.up * -tailAttackAngle * speed / 320);
+        //速度によって姿勢を変える。（失速時は下を向く）
+        if(-0.1f * speed + 10f >= 0){
+            characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10)* Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
         }
-        else if (isNear == 2)
-        {
-            //右に回転
-            Body.transform.Rotate(0, 0, -5);
-            isNear = 0;
-        }
-    }
-    
-    public void AnimationControl()
-    {
-        //関節の動きを制御する
-        
+
     }
 }
