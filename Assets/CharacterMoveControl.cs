@@ -12,8 +12,10 @@ public class CharacterMoveControl : MonoBehaviour
     float K = 0.01f; //空気抵抗の比例係数
     int Xsensitivity = 5000;//横方向の感度
     int Ysensitivity = 10000;//縦方向の感度
+    int isNear;
     float XtorqueVelocity;
     float YtorqueVelocity;
+    
     public void AttitudeControl()
     {
         /*ドラッグを検出して基本姿勢に反映する。*/
@@ -70,9 +72,19 @@ public class CharacterMoveControl : MonoBehaviour
         //加速（実験）
         if (Input.GetKey("l"))
         {
-            characterPhysics.AddForce(transform.forward * 1);
+            characterPhysics.AddForce(transform.forward * 500);
+        }
+        //ニアミス判定実験
+        if (Input.GetKey("o"))
+        {
+            isNear = 1;//左仮)
+        }
+        else if (Input.GetKey("p"))
+        {
+            isNear = 2;//右(仮)
         }
         FlyControl();
+        
     }
 
     public void FlyControl()
@@ -86,6 +98,30 @@ public class CharacterMoveControl : MonoBehaviour
         characterPhysics.AddForce(transform.up * attackAngle * speed/300);
         Debug.Log(attackAngle);
         //垂直尾翼
-
+        MotionControl();
+    }
+    
+    public void MotionControl()
+    {
+        //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
+        GameObject Body = GameObject.Find("Body");
+        if (isNear == 1)
+        {
+            //左に回転
+            Body.transform.Rotate(0, 0, 5);
+            isNear = 0;
+        }
+        else if (isNear == 2)
+        {
+            //右に回転
+            Body.transform.Rotate(0, 0, -5);
+            isNear = 0;
+        }
+    }
+    
+    public void AnimationControl()
+    {
+        //関節の動きを制御する
+        
     }
 }
