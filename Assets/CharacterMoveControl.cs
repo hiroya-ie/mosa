@@ -12,6 +12,7 @@ public class CharacterMoveControl : MonoBehaviour
     float K = 0.01f; //空気抵抗の比例係数
     int Xsensitivity = 5000;//横方向の感度
     int Ysensitivity = 10000;//縦方向の感度
+    int isNear;
     float XtorqueVelocity;
     float YtorqueVelocity;
     public GameObject body;
@@ -48,7 +49,7 @@ public class CharacterMoveControl : MonoBehaviour
         {
             dragVector.x = 200;
         }
-
+        
         //ドラッグの限界を設ける
         if (dragVector.y > 200)
         {
@@ -93,6 +94,16 @@ public class CharacterMoveControl : MonoBehaviour
             characterPhysics.AddForce(transform.forward * 5);
         }
         FlyControl();
+        //ニアミス判定実験
+        if (Input.GetKey("o"))
+        {
+            isNear = 1;//左仮)
+        }
+        else if (Input.GetKey("p"))
+        {
+            isNear = 2;//右(仮)
+        }
+
     }
 
     public void FlyControl()
@@ -112,6 +123,24 @@ public class CharacterMoveControl : MonoBehaviour
         if(-0.1f * speed + 10f >= 0){
             characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10)* Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
         }
+        MotionControl();
 
+    }
+    public void MotionControl()
+    {
+        //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
+        GameObject Body = GameObject.Find("Body");
+        if (isNear == 1)
+        {
+            //左に回転
+            Body.transform.Rotate(0, 0, 5);
+            isNear = 0;
+        }
+        else if (isNear == 2)
+        {
+            //右に回転
+            Body.transform.Rotate(0, 0, -5);
+            isNear = 0;
+        }
     }
 }
