@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterMoveControl : MonoBehaviour
 {
-
+    bool isAcceleration;
     //attitudeControl()用関数
     Vector3 basicAttitude;//基本姿勢
     Vector3 firstMousePosition;
@@ -14,7 +14,7 @@ public class CharacterMoveControl : MonoBehaviour
     int Ysensitivity = 10000;//縦方向の感度
     float XtorqueVelocity;
     float YtorqueVelocity;
-    public GameObject body;
+    //FlyControl()用関数
     float speed;
     public void AttitudeControl()
     {
@@ -87,10 +87,13 @@ public class CharacterMoveControl : MonoBehaviour
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
-        //加速（実験）
-        if (Input.GetKey("l"))
+        if (Input.GetKeyDown("v"))
         {
-            characterPhysics.AddForce(transform.forward * 5);
+            isAcceleration = true;
+        }
+        if (Input.GetKeyDown("b"))
+        {
+            isAcceleration = false;
         }
         FlyControl();
     }
@@ -109,9 +112,15 @@ public class CharacterMoveControl : MonoBehaviour
         characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
         characterPhysics.AddTorque(transform.up * -tailAttackAngle * speed / 320);
         //速度によって姿勢を変える。（失速時は下を向く）
-        if(-0.1f * speed + 10f >= 0){
+        if(-0.1f * speed + 10f > 0){
             characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10)* Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
         }
-
+        //加速させる。
+        if (isAcceleration == true)
+        {
+            characterPhysics.AddForce(transform.forward * 5);
+        }
+        //速度ベクトルをカメラに伝える
+        //スコア加算命令
     }
 }
