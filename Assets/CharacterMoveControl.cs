@@ -83,10 +83,11 @@ public class CharacterMoveControl : MonoBehaviour
         //基本姿勢に反映
         basicAttitude += transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
         //transform.rotation = Quaternion.Euler(basicAttitude);
-        //キャラクターに反映（実験）
+        //キャラクターに反映
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
+        //isAcceleration変数の実験
         if (Input.GetKeyDown("v"))
         {
             isAcceleration = true;
