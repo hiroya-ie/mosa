@@ -12,6 +12,7 @@ public class CharacterMoveControl : MonoBehaviour
     float K = 0.01f; //空気抵抗の比例係数
     int Xsensitivity = 5000;//横方向の感度
     int Ysensitivity = 10000;//縦方向の感度
+    int isNear;
     float XtorqueVelocity;
     float YtorqueVelocity;
     //FlyControl()用関数
@@ -59,7 +60,7 @@ public class CharacterMoveControl : MonoBehaviour
         {
             dragVector.x = 200;
         }
-
+        
         //ドラッグの限界を設ける
         if (dragVector.y > 200)
         {
@@ -99,6 +100,16 @@ public class CharacterMoveControl : MonoBehaviour
         characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
         FlyControl();
+        //ニアミス判定実験
+        if (Input.GetKey("o"))
+        {
+            isNear = 1;//左仮)
+        }
+        else if (Input.GetKey("p"))
+        {
+            isNear = 2;//右(仮)
+        }
+
     }
 
     public void FlyControl()
@@ -107,16 +118,17 @@ public class CharacterMoveControl : MonoBehaviour
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
         //主翼の揚力
-        float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up)-90; //翼の仰角のこと
+        float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up) - 90; //翼の仰角のこと
         speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
-        characterPhysics.AddForce(transform.up * mainAttackAngle * speed/160);
+        characterPhysics.AddForce(transform.up * mainAttackAngle * speed / 160);
         //垂直尾翼。横にスライドしないようにし、進行方向に頭を向ける
         float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
         characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
         characterPhysics.AddTorque(transform.up * -tailAttackAngle * speed / 320);
         //速度によって姿勢を変える。（失速時は下を向く）
-        if(-0.1f * speed + 10f > 0){
-            characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10)* Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
+        if (-0.1f * speed + 10f > 0)
+        {
+            characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10) * Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
         }
         //加速させる。
         if (isAcceleration == true)
@@ -130,5 +142,23 @@ public class CharacterMoveControl : MonoBehaviour
         }
         //速度ベクトルをカメラに伝える
         //スコア加算命令
+        MotionControl();
+    }
+    public void MotionControl()
+    {
+        //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
+        GameObject Body = GameObject.Find("Body");
+        if (isNear == 1)
+        {
+            //左に回転
+            Body.transform.Rotate(0, 0, 5);
+            isNear = 0;
+        }
+        else if (isNear == 2)
+        {
+            //右に回転
+            Body.transform.Rotate(0, 0, -5);
+            isNear = 0;
+        }
     }
 }
