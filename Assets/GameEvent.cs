@@ -14,13 +14,17 @@ public class GameEvent : MonoBehaviour
     {
         //ニアミス呼び出し
         //加速リングイベント呼び出し
+        if (other.tag == "ring")
+        {
+            AccelerateEvent();
+        }
     }
 
     public void AccelerateEvent()
     {
         //加速リングに当たったときの処理
-
         //羽ばたきステータス設定
+        this.gameObject.GetComponent<CharacterMoveControl>().AccelSet();
         //スコア加算
         //加速する音を再生
     }

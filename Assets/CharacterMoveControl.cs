@@ -16,6 +16,17 @@ public class CharacterMoveControl : MonoBehaviour
     float YtorqueVelocity;
     //FlyControl()用関数
     float speed;
+
+    //実験中
+    float count;
+
+    //isAccelをtrueにセット（実験）
+    public void AccelSet()
+    {
+        isAcceleration = true;
+        count = 0;
+    }
+
     public void AttitudeControl()
     {
         /*ドラッグを検出して基本姿勢に反映する。*/
@@ -87,15 +98,6 @@ public class CharacterMoveControl : MonoBehaviour
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         characterPhysics.maxAngularVelocity = 50;
         characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
-        //isAcceleration変数の実験
-        if (Input.GetKeyDown("v"))
-        {
-            isAcceleration = true;
-        }
-        if (Input.GetKeyDown("b"))
-        {
-            isAcceleration = false;
-        }
         FlyControl();
     }
 
@@ -119,7 +121,12 @@ public class CharacterMoveControl : MonoBehaviour
         //加速させる。
         if (isAcceleration == true)
         {
-            characterPhysics.AddForce(transform.forward * 5);
+            characterPhysics.AddForce(transform.forward * 50);
+            count += Time.deltaTime;
+        }
+        if (count > 0.3f)//加速終了（実験）
+        {
+            isAcceleration = false;
         }
         //速度ベクトルをカメラに伝える
         //スコア加算命令
