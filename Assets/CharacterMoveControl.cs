@@ -133,7 +133,7 @@ public class CharacterMoveControl : MonoBehaviour
         //加速させる。
         if (isAcceleration == true)
         {
-            characterPhysics.AddForce(transform.forward * 50);
+            characterPhysics.AddForce(transform.forward * 30);
             count += Time.deltaTime;
         }
         if (count > 0.3f)//加速終了（実験）
