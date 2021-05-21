@@ -142,6 +142,7 @@ public class CharacterMoveControl : MonoBehaviour
         }
         //速度ベクトルをカメラに伝える
         //スコア加算命令
+        Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)/5000);
         MotionControl();
     }
     public void MotionControl()

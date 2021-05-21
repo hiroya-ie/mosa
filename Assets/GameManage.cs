@@ -10,12 +10,17 @@ public class GameManage : MonoBehaviour
     void Start()
     {
         script = character.GetComponent<CharacterMoveControl>();
+        Camera.main.GetComponent<ScoreManage>().ScoreReset();
+        //設定読み込み
+        //タイトル画面起動
     }
 
     // Update is called once per frame
     void Update()
     {
+        //シーン番号開始
+        //ゲーム関連の関数呼び出し
         script.AttitudeControl();
-
+        
     }
 }
