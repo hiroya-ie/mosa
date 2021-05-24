@@ -148,17 +148,19 @@ public class CharacterMoveControl : MonoBehaviour
     {
         //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
         GameObject Body = GameObject.Find("Body");
+	    Animator animator = Body.GetComponent<Animator>();
         if (isNear == 1)
         {
             //左に回転
-            Body.transform.Rotate(0, 0, 5);
-            isNear = 0;
+		    animator.SetTrigger("LeftRotation");
+		    isNear = 0;
         }
         else if (isNear == 2)
         {
             //右に回転
-            Body.transform.Rotate(0, 0, -5);
+            animator.SetTrigger("RightRotation");
             isNear = 0;
         }
+                
     }
 }
