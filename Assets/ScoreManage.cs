@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScoreManage : MonoBehaviour
 {
+    //実験。スコア表示用
+    [SerializeField] GameObject scoreDisplay;
     float score = 50;
     //スコアの管理を行う
     public int GetScore()
@@ -17,6 +19,9 @@ public class ScoreManage : MonoBehaviour
         //スコアを加算する。距離、加速、ニアミスで加算予定
         score += add;
         Debug.Log("SCORE:" + score);
+        //実験。スコア表示用
+        scoreDisplay.GetComponent<TextMesh>().text = ((int)score).ToString();
+
     }
 
     public void UpdateHighScore()
