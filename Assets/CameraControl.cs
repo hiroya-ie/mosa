@@ -14,8 +14,8 @@ public class CameraControl : MonoBehaviour
          * プレイヤーの進行方向を向きながらプレイヤーを追いかける。
          */
         transform.LookAt(playerVelocity+playerPos);//プレイヤーを見る
-        Vector3 cameraPos = playerPos - (playerVelocity/2);
-        transform.position = Vector3.Lerp(this.gameObject.transform.position, cameraPos, Time.deltaTime*4);
+        Vector3 cameraPos = playerPos - (playerVelocity/4);
+        transform.position = Vector3.Lerp(this.gameObject.transform.position, cameraPos, Time.deltaTime*10);
     }
 
     public void CameraPosSet(Vector3 cameraPos,Vector3 cameraAngle)
