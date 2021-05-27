@@ -140,7 +140,9 @@ public class CharacterMoveControl : MonoBehaviour
         {
             isAcceleration = false;
         }
+
         //速度ベクトルをカメラに伝える
+        Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity,this.gameObject.transform.position);
         //スコア加算命令
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)/5000);
         MotionControl();
