@@ -133,15 +133,18 @@ public class CharacterMoveControl : MonoBehaviour
         //加速させる。
         if (isAcceleration == true)
         {
-            characterPhysics.AddForce(transform.forward * 50);
+            characterPhysics.AddForce(transform.forward * 30);
             count += Time.deltaTime;
         }
         if (count > 0.3f)//加速終了（実験）
         {
             isAcceleration = false;
         }
+
         //速度ベクトルをカメラに伝える
+        Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity,this.gameObject.transform.position);
         //スコア加算命令
+        Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)/5000);
         MotionControl();
     }
     public void MotionControl()

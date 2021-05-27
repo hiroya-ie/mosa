@@ -26,6 +26,7 @@ public class GameEvent : MonoBehaviour
         //羽ばたきステータス設定
         this.gameObject.GetComponent<CharacterMoveControl>().AccelSet();
         //スコア加算
+        Camera.main.GetComponent<ScoreManage>().ScoreCalc(200);
         //加速する音を再生
     }
 }
