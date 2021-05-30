@@ -10,11 +10,8 @@ public class CharacterMoveControl : MonoBehaviour
     Vector3 firstMousePosition;
     Vector3 mousePosition;
     float K = 0.01f; //空気抵抗の比例係数
-    int Xsensitivity = 5000;//横方向の感度
-    int Ysensitivity = 10000;//縦方向の感度
+    Vector3 sensitivity = new Vector3(60, 40, 0);
     int isNear;
-    float XtorqueVelocity;
-    float YtorqueVelocity;
     //FlyControl()用関数
     float speed;
 
@@ -79,26 +76,24 @@ public class CharacterMoveControl : MonoBehaviour
         //スピードによって操作の応答性を変える
         dragVector *= speed / 100;
 
-        
+
 
         //基本姿勢を変換
-        //左右方向の加速度を計算（空気抵抗ありで）float
-        float XtorqueAccel = -dragVector.x / Xsensitivity - K * XtorqueVelocity;
-        //左右方向の速度を計算 float
-        XtorqueVelocity += XtorqueAccel;
 
-        //上下方向の加速度を計算（空気抵抗ありで）
-        float YtorqueAccel = dragVector.y / Ysensitivity - K * YtorqueVelocity;
-        //上下方向の速度を計算 float
-        YtorqueVelocity += YtorqueAccel;
-
-        //基本姿勢に反映
-        basicAttitude += transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
-        //transform.rotation = Quaternion.Euler(basicAttitude);
-        //キャラクターに反映
+        //前方への速度を算出
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
-        characterPhysics.maxAngularVelocity = 50;
-        characterPhysics.angularVelocity = transform.forward * XtorqueVelocity + transform.right * YtorqueVelocity;
+        float forwardSpeed = Vector3.Dot(characterPhysics.velocity,transform.forward);
+        //水平尾翼で生まれる力を計算
+        float pitch = forwardSpeed * dragVector.y / sensitivity.y;
+        float roll = forwardSpeed * dragVector.x / sensitivity.x;
+
+        //姿勢に反映
+        characterPhysics.maxAngularVelocity = 7;//回転の上限
+        characterPhysics.AddTorque(transform.right * pitch*Time.deltaTime);
+        characterPhysics.AddTorque(-transform.forward * roll * Time.deltaTime);
+
+
+
         FlyControl();
         //ニアミス判定実験
         if (Input.GetKey("o"))
@@ -120,20 +115,21 @@ public class CharacterMoveControl : MonoBehaviour
         //主翼の揚力
         float mainAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.up) - 90; //翼の仰角のこと
         speed = Mathf.Sqrt(characterPhysics.velocity.x * characterPhysics.velocity.x + characterPhysics.velocity.y * characterPhysics.velocity.y + characterPhysics.velocity.z * characterPhysics.velocity.z);
-        characterPhysics.AddForce(transform.up * mainAttackAngle * speed / 160);
+        characterPhysics.AddForce(Time.deltaTime * transform.up * mainAttackAngle * speed*2);
         //垂直尾翼。横にスライドしないようにし、進行方向に頭を向ける
         float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
-        characterPhysics.AddForce(transform.right * tailAttackAngle * speed / 320);
-        characterPhysics.AddTorque(transform.up * -tailAttackAngle * speed / 320);
+        characterPhysics.AddForce(Time.deltaTime * transform.right * tailAttackAngle * speed);
+        characterPhysics.AddTorque(Time.deltaTime * transform.up * -tailAttackAngle * speed);
         //速度によって姿勢を変える。（失速時は下を向く）
-        if (-0.1f * speed + 10f > 0)
+        if (1 - (speed / 100) > 0)
         {
-            characterPhysics.AddTorque(new Vector3((-0.1f * speed + 10) * Vector3.Angle(characterPhysics.velocity, transform.forward) / 200, 0, 0));
+            characterPhysics.AddTorque(Time.deltaTime * transform.right * mainAttackAngle * speed * (1 - (speed / 100)));
         }
+
         //加速させる。
         if (isAcceleration == true)
         {
-            characterPhysics.AddForce(transform.forward * 30);
+            characterPhysics.AddForce(transform.forward * 20000 * Time.deltaTime);
             count += Time.deltaTime;
         }
         if (count > 0.3f)//加速終了（実験）
