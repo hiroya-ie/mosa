@@ -6,18 +6,65 @@ using UnityEngine.UI;
 public class UIManage : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] GameObject StartMenuPanel;
-    [SerializeField] GameObject GamePanel;
+    int operationMode,resolution,effect,weather;
+    float volumeSE,volumeNoise,volumeBGM;
+    bool invert;
+    public GameObject mainCamera;
+    public GameObject Character;
+    SceneManage SMscript;
+    
     void Start()
     {
-        StartMenuPanel.SetActive(true);
-        GamePanel.SetActive(false);
+        SMscript = mainCamera.GetComponent<SceneManage>();
     }
-
-    public void CloseStartMenu()
+    
+    public void TitleUIGameStartClick()
     {
-        //Panel.SetActive(fales);
-        StartMenuPanel.SetActive(false);
-        GamePanel.SetActive(false);
+        SMscript.ChangeScene(2); //2でゲームスタート
+        Character.SetActive(true);
     }
+    
+    public void TitleUIConfigClick()
+    {
+        SMscript.ChangeScene(1); //1でconfig
+    }
+    
+    public void TitleUIExitClick(){}
+    
+    public void ConfigUIOpStandardClick(){}
+    
+    public void ConfigUIOpExpertClick(){}
+    
+    public void ConfigUIInvertClick(){}
+    
+    public void ConfigUIVolumeSESlide(){}
+    
+    public void ConfigUIVolumeNoise(){}
+    
+    public void ConfigUIVolumeBGMSlide(){}
+    
+    public void ConfigUIReturnClick()
+    {
+        SMscript.ChangeScene(0); //0でタイトル
+    }
+    
+    public void GameUIPauseClick()
+    {
+        Time.timeScale = 0;
+        SMscript.ChangeScene(3); //3でpauseメニュー
+    }
+    
+    public void MenuUIContinueClick()
+    {
+        Time.timeScale = 1;
+        SMscript.ChangeScene(2);
+    }
+    
+    public void MenuUIExitClick()
+    {
+        Character.SetActive(false);
+        SMscript.ChangeScene(0); //0でタイトル
+    }
+    
+    
 }
