@@ -118,8 +118,8 @@ public class CharacterMoveControl : MonoBehaviour
         characterPhysics.AddForce(Time.deltaTime * transform.up * mainAttackAngle * speed*2);
         //垂直尾翼。横にスライドしないようにし、進行方向に頭を向ける
         float tailAttackAngle = Vector3.Angle(characterPhysics.velocity, transform.right) - 90;
-        characterPhysics.AddForce(Time.deltaTime * transform.right * tailAttackAngle * speed);
-        characterPhysics.AddTorque(Time.deltaTime * transform.up * -tailAttackAngle * speed);
+        characterPhysics.AddForce(Time.deltaTime * transform.right * tailAttackAngle * speed/2);
+        characterPhysics.AddTorque(Time.deltaTime * transform.up * -tailAttackAngle * speed/2);
         //速度によって姿勢を変える。（失速時は下を向く）
         if (1 - (speed / 100) > 0)
         {
@@ -140,7 +140,7 @@ public class CharacterMoveControl : MonoBehaviour
         //速度ベクトルをカメラに伝える
         Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity,this.gameObject.transform.position);
         //スコア加算命令
-        Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)/5000);
+        Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)*Time.deltaTime);
         MotionControl();
     }
     public void MotionControl()
