@@ -14,6 +14,8 @@ public class CharacterMoveControl : MonoBehaviour
     int isNear;
     //FlyControl()用関数
     float speed;
+    //MotionControl
+    [SerializeField] GameObject body;
 
     //実験中
     float count;
@@ -146,8 +148,7 @@ public class CharacterMoveControl : MonoBehaviour
     public void MotionControl()
     {
         //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
-        GameObject Body = GameObject.Find("Body");
-	    Animator animator = Body.GetComponent<Animator>();
+	    Animator animator = body.GetComponent<Animator>();
         if (isNear == 1)
         {
             //左に回転
