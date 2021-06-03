@@ -29,7 +29,10 @@ public class UIManage : MonoBehaviour
         SMscript.ChangeScene(1); //1でconfig
     }
     
-    public void TitleUIExitClick(){}
+    public void TitleUIExitClick()
+    {
+        Application.Quit();
+    }
     
     public void ConfigUIOpStandardClick(){}
     
