@@ -18,23 +18,25 @@ public class ScoreManage : MonoBehaviour
     {
         //スコアを加算する。距離、加速、ニアミスで加算予定
         score += add;
-        Debug.Log("SCORE:" + score);
+        //Debug.Log("SCORE:" + score);
         //実験。スコア表示用
-        scoreDisplay.GetComponent<TextMesh>().text = ((int)score).ToString();
+        scoreDisplay.GetComponent<TextMesh>().text = ("score:"+(int)score).ToString();
 
     }
 
     public void UpdateHighScore()
     {
         //ハイスコアと今のスコアを比較してハイスコア更新
-        int highscore = 0;
+        DataManage dataManage = Camera.main.GetComponent<DataManage>();
         //LoadDataを呼び出してハイスコア確認
+        (int highscore, int load_score, int operationMode, int volumeSE, int volumeNoise, int VolumeBGM, int resolution, int effect, int weather)  = dataManage.LoadData();
         //ハイスコアと今のスコアを比較
         if (score > highscore)
         {
             highscore = (int)score;
         }
         //SaveDataを呼び出してデータ更新
+        dataManage.SaveData(highscore: highscore, score: (int)score);
     }
 
     public void ScoreReset()
