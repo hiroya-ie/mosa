@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterMoveControl : MonoBehaviour
 {
+
     bool isAcceleration;
     //attitudeControl()用関数
     Vector3 basicAttitude;//基本姿勢
@@ -16,19 +17,29 @@ public class CharacterMoveControl : MonoBehaviour
     float speed;
     //MotionControl
     [SerializeField] GameObject body;
+    //ゲーム開始アニメーション
+    bool isStart = false;
 
     //実験中
-    float count;
+    float accelCount;
 
     //isAccelをtrueにセット（実験）
     public void AccelSet()
     {
         isAcceleration = true;
-        count = 0;
+        accelCount = 0;
+    }
+
+    //ゲーム開始アニメーション用
+    public void StartSet()
+    {
+        isStart = true;
     }
 
     public void AttitudeControl()
     {
+        Rigidbody characterPhysics = GetComponent<Rigidbody>();
+
         /*ドラッグを検出して基本姿勢に反映する。*/
         Vector3 dragVector = new Vector3(0,0,0);
         //ドラッグを取得
@@ -75,6 +86,21 @@ public class CharacterMoveControl : MonoBehaviour
         {
             dragVector.x = -200;
         }
+
+        if (isStart == true)//ゲーム開始アニメーション
+        {
+
+            if (transform.rotation.eulerAngles.x+10 > 180)
+            {
+                isStart = false;
+            }
+            else
+            {
+                dragVector = new Vector3(0, -10 * transform.rotation.eulerAngles.x, 0);
+                characterPhysics.AddForce(transform.forward * 4000 * Time.deltaTime);
+            }
+        }
+
         //スピードによって操作の応答性を変える
         dragVector *= speed / 100;
 
@@ -83,7 +109,6 @@ public class CharacterMoveControl : MonoBehaviour
         //基本姿勢を変換
 
         //前方への速度を算出
-        Rigidbody characterPhysics = GetComponent<Rigidbody>();
         float forwardSpeed = Vector3.Dot(characterPhysics.velocity,transform.forward);
         //水平尾翼で生まれる力を計算
         float pitch = forwardSpeed * dragVector.y / sensitivity.y;
@@ -132,15 +157,20 @@ public class CharacterMoveControl : MonoBehaviour
         if (isAcceleration == true)
         {
             characterPhysics.AddForce(transform.forward * 20000 * Time.deltaTime);
-            count += Time.deltaTime;
+            accelCount += Time.deltaTime;
         }
-        if (count > 0.3f)//加速終了（実験）
+        if (accelCount > 0.3f)//加速終了（実験）
         {
             isAcceleration = false;
         }
 
         //速度ベクトルをカメラに伝える
-        Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity,this.gameObject.transform.position);
+        if (isStart == false)
+        {
+            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position);
+        }
+      
+
         //スコア加算命令
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)*Time.deltaTime);
         MotionControl();

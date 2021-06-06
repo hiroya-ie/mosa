@@ -11,13 +11,14 @@ public class SceneManage : MonoBehaviour
     [SerializeField] GameObject GamePanel;
     [SerializeField] GameObject ConfigPanel;
     [SerializeField] GameObject MenuPanel;
+    [SerializeField] GameEvent playerObject;
     
     void Start()
     {
         LoadTitle();
     }
 
-    int GetScene(){return currentSceneNum;}
+    public int GetScene(){return currentSceneNum;}
     
     public void ChangeScene(int sceneNum)
     {
@@ -36,6 +37,7 @@ public class SceneManage : MonoBehaviour
                 LoadMenu();
                 break;
         }
+        currentSceneNum = sceneNum;
     }
 
     public void LoadTitle()
@@ -60,6 +62,8 @@ public class SceneManage : MonoBehaviour
         GamePanel.SetActive(true);
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
+        //ゲーム開始時の演出
+        playerObject.GetComponent<CharacterMoveControl>().StartSet();
     }
     
     public void LoadMenu()
