@@ -31,7 +31,13 @@ public class UIManage : MonoBehaviour
     
     public void TitleUIExitClick()
     {
-        Application.Quit();
+        #if UNITY_EDITOR
+		    UnityEditor.EditorApplication.isPlaying = false;
+	    #elif UNITY_WEBPLAYER
+		    Application.OpenURL("http://www.yahoo.co.jp/");
+	    #else
+		    Application.Quit();
+	    #endif
     }
     
     public void ConfigUIOpStandardClick(){}
@@ -42,7 +48,7 @@ public class UIManage : MonoBehaviour
     
     public void ConfigUIVolumeSESlide(){}
     
-    public void ConfigUIVolumeNoise(){}
+    public void ConfigUIVolumeNoiseSlide(){}
     
     public void ConfigUIVolumeBGMSlide(){}
     
@@ -67,6 +73,7 @@ public class UIManage : MonoBehaviour
     {
         Character.SetActive(false);
         SMscript.ChangeScene(0); //0でタイトル
+        Time.timeScale = 1;
     }
     
     

@@ -44,6 +44,7 @@ public class SceneManage : MonoBehaviour
         GamePanel.SetActive(false);
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
+        currentSceneNum = 0;
     }
     
     public void LoadConfig()
@@ -52,6 +53,7 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(true);
         GamePanel.SetActive(false);
         MenuPanel.SetActive(false);
+        currentSceneNum = 1;
     }
     
     public void LoadGame()
@@ -60,6 +62,7 @@ public class SceneManage : MonoBehaviour
         GamePanel.SetActive(true);
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
+        currentSceneNum = 2;
     }
     
     public void LoadMenu()
@@ -68,6 +71,7 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(false);
         GamePanel.SetActive(true);
         MenuPanel.SetActive(true);
+        currentSceneNum = 3;
     }
 
     
