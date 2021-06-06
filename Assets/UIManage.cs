@@ -9,24 +9,25 @@ public class UIManage : MonoBehaviour
     int operationMode,resolution,effect,weather;
     float volumeSE,volumeNoise,volumeBGM;
     bool invert;
-    public GameObject mainCamera;
+    public GameObject MainCamera;
     public GameObject Character;
-    SceneManage SMscript;
+    SceneManage SceneManagescript;
     
     void Start()
     {
-        SMscript = mainCamera.GetComponent<SceneManage>();
+        SceneManagescript = MainCamera.GetComponent<SceneManage>();
     }
     
     public void TitleUIGameStartClick()
     {
-        SMscript.ChangeScene(2); //2でゲームスタート
+        SceneManagescript.ChangeScene(2); //2でゲームスタート
+        Time.timeScale = 1;
         Character.SetActive(true);
     }
     
     public void TitleUIConfigClick()
     {
-        SMscript.ChangeScene(1); //1でconfig
+        SceneManagescript.ChangeScene(1); //1でconfig
     }
     
     public void TitleUIExitClick()
@@ -54,26 +55,31 @@ public class UIManage : MonoBehaviour
     
     public void ConfigUIReturnClick()
     {
-        SMscript.ChangeScene(0); //0でタイトル
+        SceneManagescript.ChangeScene(0); //0でタイトル
     }
     
     public void GameUIPauseClick()
     {
         Time.timeScale = 0;
-        SMscript.ChangeScene(3); //3でpauseメニュー
+        SceneManagescript.ChangeScene(3); //3でpauseメニュー
     }
     
     public void MenuUIContinueClick()
     {
         Time.timeScale = 1;
-        SMscript.ChangeScene(2);
+        SceneManagescript.isContinue = true;
+        SceneManagescript.ChangeScene(2);
     }
     
     public void MenuUIExitClick()
-    {
+    {   
+        Character.transform.position = new Vector3(0,0,0);
+        Character.transform.rotation = Quaternion.identity;
+        MainCamera.transform.position = new Vector3(0,0,0);
+        MainCamera.transform.localRotation = default;
         Character.SetActive(false);
-        SMscript.ChangeScene(0); //0でタイトル
-        Time.timeScale = 1;
+        SceneManagescript.ChangeScene(0); //0でタイトル
+        SceneManagescript.isContinue = false;
     }
     
     

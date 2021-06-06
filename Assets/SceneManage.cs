@@ -6,15 +6,19 @@ public class SceneManage : MonoBehaviour
 {
     // Start is called before the first frame update
     int currentSceneNum;
-    bool isContinue;
+    public bool isContinue;
+    public GameObject ScoreDisplay;
+    public GameObject Character;
     [SerializeField] GameObject TitlePanel;
     [SerializeField] GameObject GamePanel;
     [SerializeField] GameObject ConfigPanel;
     [SerializeField] GameObject MenuPanel;
+    ScoreManage ScoreManagescript;
     
     void Start()
     {
         LoadTitle();
+        ScoreManagescript = GetComponent<ScoreManage>();
     }
 
     int GetScene(){return currentSceneNum;}
@@ -44,6 +48,7 @@ public class SceneManage : MonoBehaviour
         GamePanel.SetActive(false);
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
+        ScoreDisplay.SetActive(false);
         currentSceneNum = 0;
     }
     
@@ -62,6 +67,12 @@ public class SceneManage : MonoBehaviour
         GamePanel.SetActive(true);
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
+        ScoreDisplay.SetActive(true);
+        if (isContinue == false)
+        {
+            ScoreManagescript.ScoreReset();
+        }
+        
         currentSceneNum = 2;
     }
     

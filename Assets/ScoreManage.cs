@@ -20,7 +20,7 @@ public class ScoreManage : MonoBehaviour
         score += add;
         //Debug.Log("SCORE:" + score);
         //実験。スコア表示用
-        scoreDisplay.GetComponent<TextMesh>().text = ("score:"+(int)score).ToString();
+        scoreDisplay.GetComponent<TextMesh>().text = ((int)score).ToString();
 
     }
 
