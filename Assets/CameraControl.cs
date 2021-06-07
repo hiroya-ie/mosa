@@ -11,18 +11,17 @@ public class CameraControl : MonoBehaviour
     float xVelocity;
     float yVelocity;
     float zVelocity;
-    float traceSpeed = 3f;
+    float traceSpeed = 5f;
     float TARGET_TRACE_SPEED = 0.3f;
+    Vector3 cameraPos;
 
 
-    public void CameraTrace(Vector3 playerVelocity,Vector3 playerPos)
+    public void CameraTrace(Vector3 playerVelocity,Vector3 playerPos,bool isDead)
     {
         /*
          * プレイヤーの進行方向を向きながらプレイヤーを追いかける。
          */
         //角度を変更
-        //transform.LookAt((playerVelocity*2)+playerPos);//プレイヤーを見る
-        //https://gametukurikata.com/basic/smooth
         Vector3 relativePos = playerPos - this.transform.position;
         Vector3 angle = Quaternion.LookRotation(relativePos).eulerAngles;
         float rotateSpeed = 0.5f;
@@ -41,9 +40,20 @@ public class CameraControl : MonoBehaviour
         {
             traceSpeed = TARGET_TRACE_SPEED;
         }
-        Vector3 cameraPos = playerPos - (playerVelocity/4);
+
+
+        if (isDead == false)
+        {
+            cameraPos = playerPos - (playerVelocity/6);
+        }
+        else
+        {
+            cameraPos.y += 0.05f;
+        }
+
         //transform.position = Vector3.Lerp(this.gameObject.transform.position, cameraPos, Time.deltaTime*10);
         transform.position = Vector3.SmoothDamp(transform.position, cameraPos, ref speed, traceSpeed);
+
     }
 
     public void CameraPosSet(Vector3 cameraPos,Vector3 cameraAngle)
@@ -52,5 +62,6 @@ public class CameraControl : MonoBehaviour
          * 引数で指定された座標にカメラを移動させる。
          */
         transform.position = cameraPos;
+        transform.rotation = Quaternion.Euler(cameraAngle);
     }
 }

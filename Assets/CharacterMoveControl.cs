@@ -19,6 +19,10 @@ public class CharacterMoveControl : MonoBehaviour
     [SerializeField] GameObject body;
     //ゲーム開始アニメーション
     bool isStart = false;
+    //死亡
+    bool isDead = false;
+    //カメラ操作
+    Vector3 cameraPos;
 
     //実験中
     float accelCount;
@@ -39,6 +43,12 @@ public class CharacterMoveControl : MonoBehaviour
     public void AttitudeControl()
     {
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
+        if (isDead == true)
+        {
+            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position,isDead);
+            this.gameObject.GetComponent<Rigidbody>().angularDrag = 0;
+            return;
+        }
 
         /*ドラッグを検出して基本姿勢に反映する。*/
         Vector3 dragVector = new Vector3(0,0,0);
@@ -167,9 +177,9 @@ public class CharacterMoveControl : MonoBehaviour
         //速度ベクトルをカメラに伝える
         if (isStart == false)
         {
-            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position);
+            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position,isDead);
         }
-      
+
 
         //スコア加算命令
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)*Time.deltaTime);
@@ -192,5 +202,10 @@ public class CharacterMoveControl : MonoBehaviour
             isNear = 0;
         }
                 
+    }
+
+    public void setDead()
+    {
+        isDead = true;
     }
 }
