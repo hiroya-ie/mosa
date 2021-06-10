@@ -14,7 +14,8 @@ public class SceneManage : MonoBehaviour
     [SerializeField] GameObject ConfigPanel;
     [SerializeField] GameObject MenuPanel;
     ScoreManage ScoreManagescript;
-    
+    [SerializeField] GameEvent playerObject;
+
     void Start()
     {
         LoadTitle();
@@ -73,7 +74,9 @@ public class SceneManage : MonoBehaviour
         {
             ScoreManagescript.ScoreReset();
         }
-        
+        //ゲーム開始時の演出
+        playerObject.GetComponent<CharacterMoveControl>().StartSet();
+
         currentSceneNum = 2;
     }
     

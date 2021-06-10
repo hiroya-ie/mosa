@@ -164,6 +164,12 @@ public class CharacterMoveControl : MonoBehaviour
         }
 
         //加速させる。
+        //加速チート
+        if (Input.GetKey("l"))
+        {
+            characterPhysics.AddForce(transform.forward * 6000 * Time.deltaTime);
+        }
+
         if (isAcceleration == true)
         {
             characterPhysics.AddForce(transform.forward * 20000 * Time.deltaTime);
