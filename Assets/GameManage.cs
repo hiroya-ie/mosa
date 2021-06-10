@@ -5,15 +5,18 @@ using UnityEngine;
 public class GameManage : MonoBehaviour
 {
     public GameObject character;
-    CharacterMoveControl script;
+    CharacterMoveControl characterMoveControl;
+    SceneManage sceneManage;
 
     //実験。ハイスコアのテスト。
     [SerializeField] GameObject highscoredisplay;
     // Start is called before the first frame update
     void Start()
     {
-        script = character.GetComponent<CharacterMoveControl>();
+        //Application.targetFrameRate = 10;
+        characterMoveControl = character.GetComponent<CharacterMoveControl>();
         Camera.main.GetComponent<ScoreManage>().ScoreReset();
+        sceneManage = Camera.main.GetComponent<SceneManage>();
 
         //実験。ハイスコアのテスト。
         (int highscore, int load_score, int operationMode, int volumeSE, int volumeNoise, int VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
@@ -27,7 +30,18 @@ public class GameManage : MonoBehaviour
     {
         //シーン番号開始
         //ゲーム関連の関数呼び出し
-        script.AttitudeControl();
+        switch (sceneManage.GetScene())
+        {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                characterMoveControl.AttitudeControl();
+                break;
+            case 3:
+                break;
+        }
 
         //実験。ハイスコアのテスト。
         if (Input.GetKeyDown("e"))

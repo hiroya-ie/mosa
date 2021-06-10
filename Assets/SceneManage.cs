@@ -21,7 +21,7 @@ public class SceneManage : MonoBehaviour
         ScoreManagescript = GetComponent<ScoreManage>();
     }
 
-    int GetScene(){return currentSceneNum;}
+    public int GetScene(){return currentSceneNum;}
     
     public void ChangeScene(int sceneNum)
     {
@@ -40,6 +40,7 @@ public class SceneManage : MonoBehaviour
                 LoadMenu();
                 break;
         }
+        currentSceneNum = sceneNum;
     }
 
     public void LoadTitle()

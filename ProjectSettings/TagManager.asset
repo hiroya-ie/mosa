@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ring
+  - crash
   layers:
   - Default
   - TransparentFX
