@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class UIManage : MonoBehaviour
 {
     // Start is called before the first frame update
-    int operationMode,resolution,effect,weather;
-    float volumeSE,volumeNoise,volumeBGM;
-    bool invert;
+    public int operationMode,resolution,effect,weather;
+    public float volumeSE,volumeNoise,volumeBGM;
+    public bool invert;
     public GameObject MainCamera;
     public GameObject Character;
+    public Toggle toggle;
+    public Slider NoiseSlider;
+    public AudioSource NoiseAudioSource;
     SceneManage SceneManagescript;
     
     void Start()
@@ -41,15 +44,30 @@ public class UIManage : MonoBehaviour
 	    #endif
     }
     
-    public void ConfigUIOpStandardClick(){}
+    public void ConfigUIOpStandardClick()
+    {
+        operationMode = 0;
+    }
     
-    public void ConfigUIOpExpertClick(){}
+    public void ConfigUIOpExpertClick()
+    {
+        operationMode = 1;
+    }
     
-    public void ConfigUIInvertClick(){}
+    public void ConfigUIInvertClick()
+    {
+        invert = toggle.isOn;
+        //Debug.Log (toggle.isOn);
+    }
     
     public void ConfigUIVolumeSESlide(){}
     
-    public void ConfigUIVolumeNoiseSlide(){}
+    public void ConfigUIVolumeNoiseSlide()
+    {
+        volumeNoise = NoiseSlider.normalizedValue;
+        //Debug.Log (volumeNoise);
+        NoiseAudioSource.volume = NoiseSlider.normalizedValue;
+    }
     
     public void ConfigUIVolumeBGMSlide(){}
     
@@ -76,7 +94,7 @@ public class UIManage : MonoBehaviour
         Character.transform.position = new Vector3(0,0,0);
         Character.transform.rotation = Quaternion.identity;
         MainCamera.transform.position = new Vector3(0,0,0);
-        MainCamera.transform.localRotation = default;
+        MainCamera.transform.rotation = Quaternion.identity;
         Character.SetActive(false);
         SceneManagescript.ChangeScene(0); //0でタイトル
         SceneManagescript.isContinue = false;
