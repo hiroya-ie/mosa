@@ -55,10 +55,14 @@ public class AutoStage : MonoBehaviour
     GameObject MakeStage(int index)//ステージを生成する
     {
         int nextStage = Random.Range(0, stagenum.Length);
-
-        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(-2000, -550,index * StageSize), Quaternion.identity);
-
-        return stageObject;
+        if(nextStage%2 == 0)
+        {
+            GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(-2000, -550,index * StageSize), Quaternion.identity);
+            return stageObject;
+        }else{
+            GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(-500, -550,index * StageSize), Quaternion.identity);
+            return stageObject;
+        }
     }
 
     void DestroyStage()
