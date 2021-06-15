@@ -8,8 +8,6 @@ public class GameManage : MonoBehaviour
     CharacterMoveControl characterMoveControl;
     SceneManage sceneManage;
 
-    //実験。ハイスコアのテスト。
-    [SerializeField] GameObject highscoredisplay;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +16,6 @@ public class GameManage : MonoBehaviour
         Camera.main.GetComponent<ScoreManage>().ScoreReset();
         sceneManage = Camera.main.GetComponent<SceneManage>();
 
-        //実験。ハイスコアのテスト。
-        (int highscore, int load_score, int operationMode, int volumeSE, int volumeNoise, int VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
-        highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         //設定読み込み
         //タイトル画面起動
     }
@@ -44,10 +39,6 @@ public class GameManage : MonoBehaviour
         }
 
         //実験。ハイスコアのテスト。
-        if (Input.GetKeyDown("e"))
-        {
-            Camera.main.GetComponent<ScoreManage>().UpdateHighScore();
-        }
         if (Input.GetKeyDown("r"))
         {
             Camera.main.GetComponent<DataManage>().ResetData();

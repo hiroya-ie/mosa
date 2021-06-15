@@ -21,6 +21,7 @@ public class CharacterMoveControl : MonoBehaviour
     bool isStart = false;
     //死亡
     bool isDead = false;
+    float deadCount = 0;
     //カメラ操作
     Vector3 cameraPos;
 
@@ -40,6 +41,26 @@ public class CharacterMoveControl : MonoBehaviour
         isStart = true;
     }
 
+    public void GameOver()
+    {
+        //ゲームオーバー時の処理
+        isDead = false;
+        ResetCharacter();
+        Camera.main.GetComponent<ScoreManage>().UpdateHighScore();
+        Camera.main.GetComponent<SceneManage>().ChangeScene(0);
+    }
+    public void ResetCharacter()
+    {
+        Camera.main.GetComponent<CameraControl>().CameraPosSet(new Vector3(0, -33.3f, -5f), new Vector3(8.579f, 0, 0));
+        transform.position = new Vector3(0, 0.5523103f, 0.2638457f);
+        transform.rotation = Quaternion.Euler(new Vector3(53.106f, 0, 0));
+        this.gameObject.GetComponent<Rigidbody>().angularDrag = 5;
+        this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        this.gameObject.SetActive(false);
+    }
+
+
     public void AttitudeControl()
     {
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
@@ -47,8 +68,16 @@ public class CharacterMoveControl : MonoBehaviour
         {
             Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position,isDead);
             this.gameObject.GetComponent<Rigidbody>().angularDrag = 0;
+            deadCount += Time.deltaTime;
+            if (deadCount > 6)
+            {
+                deadCount = 0;
+                GameOver();
+            }
             return;
         }
+
+
 
         /*ドラッグを検出して基本姿勢に反映する。*/
         Vector3 dragVector = new Vector3(0,0,0);

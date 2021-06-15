@@ -15,6 +15,7 @@ public class SceneManage : MonoBehaviour
     [SerializeField] GameObject MenuPanel;
     ScoreManage ScoreManagescript;
     [SerializeField] GameEvent playerObject;
+    [SerializeField] GameObject highscoredisplay;
 
     void Start()
     {
@@ -51,6 +52,8 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
         ScoreDisplay.SetActive(false);
+        (int highscore, int load_score, int operationMode, int volumeSE, int volumeNoise, int VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
+        highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         currentSceneNum = 0;
     }
     
