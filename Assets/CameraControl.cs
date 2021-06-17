@@ -48,7 +48,7 @@ public class CameraControl : MonoBehaviour
         }
         else
         {
-            cameraPos.y += 0.05f;
+            cameraPos.y += 0.15f;
         }
 
         //transform.position = Vector3.Lerp(this.gameObject.transform.position, cameraPos, Time.deltaTime*10);

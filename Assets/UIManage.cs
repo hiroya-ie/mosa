@@ -97,12 +97,13 @@ public class UIManage : MonoBehaviour
     }
     
     public void MenuUIExitClick()
-    {   
-        Character.transform.position = new Vector3(0,0,0);
-        Character.transform.rotation = Quaternion.identity;
-        MainCamera.transform.position = new Vector3(0,0,0);
-        MainCamera.transform.rotation = Quaternion.identity;
-        Character.SetActive(false);
+    {
+        //Character.transform.position = new Vector3(0,0,0);
+        /////Character.transform.rotation = Quaternion.identity;
+        //MainCamera.transform.position = new Vector3(0,0,0);
+        //MainCamera.transform.rotation = Quaternion.identity;
+        //Character.SetActive(false);
+        Character.GetComponent<CharacterMoveControl>().ResetCharacter();
         SceneManagescript.ChangeScene(0); //0でタイトル
         SceneManagescript.isContinue = false;
     }
