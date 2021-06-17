@@ -29,7 +29,7 @@ public class ScoreManage : MonoBehaviour
         //ハイスコアと今のスコアを比較してハイスコア更新
         DataManage dataManage = Camera.main.GetComponent<DataManage>();
         //LoadDataを呼び出してハイスコア確認
-        (int highscore, int load_score, int operationMode, int volumeSE, int volumeNoise, int VolumeBGM, int resolution, int effect, int weather)  = dataManage.LoadData();
+        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather)  = dataManage.LoadData();
         //ハイスコアと今のスコアを比較
         if (score > highscore)
         {

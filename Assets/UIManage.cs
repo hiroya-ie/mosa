@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManage : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int operationMode,resolution,effect,weather;
+    public int highscore,score,operationMode,resolution,effect,weather;
     public float volumeSE,volumeNoise,volumeBGM;
     public bool invert;
     public GameObject MainCamera;
@@ -15,10 +15,16 @@ public class UIManage : MonoBehaviour
     public Slider NoiseSlider;
     public AudioSource NoiseAudioSource;
     SceneManage SceneManagescript;
+    DataManage DataManagescript;
     
     void Start()
     {
         SceneManagescript = MainCamera.GetComponent<SceneManage>();
+        DataManagescript = MainCamera.GetComponent<DataManage>();
+        //volumeNoise = PlayerPrefs.GetFloat("volumeNoise");
+        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();
+        NoiseAudioSource.volume = volumeNoise;
+        NoiseSlider.value = volumeNoise;
     }
     
     public void TitleUIGameStartClick()
@@ -66,13 +72,14 @@ public class UIManage : MonoBehaviour
     {
         volumeNoise = NoiseSlider.normalizedValue;
         //Debug.Log (volumeNoise);
-        NoiseAudioSource.volume = NoiseSlider.normalizedValue;
+        NoiseAudioSource.volume = volumeNoise;
     }
     
     public void ConfigUIVolumeBGMSlide(){}
     
     public void ConfigUIReturnClick()
     {
+        DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather);
         SceneManagescript.ChangeScene(0); //0でタイトル
     }
     
