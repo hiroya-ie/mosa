@@ -10,7 +10,7 @@ public class CharacterMoveControl : MonoBehaviour
     Vector3 basicAttitude;//Šî–{p¨
     Vector3 firstMousePosition;
     Vector3 mousePosition;
-    float K = 0.01f; //‹ó‹C’ïR‚Ì”ä—áŒW”
+    //float K = 0.01f; //‹ó‹C’ïR‚Ì”ä—áŒW”
     Vector3 sensitivity = new Vector3(60, 40, 0);
     int isNear;
     //FlyControl()—pŠÖ”
