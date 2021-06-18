@@ -58,6 +58,7 @@ public class CharacterMoveControl : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.gameObject.SetActive(false);
+        isDead = false;
     }
 
 
@@ -128,7 +129,6 @@ public class CharacterMoveControl : MonoBehaviour
 
         if (isStart == true)//ゲーム開始アニメーション
         {
-
             if (transform.rotation.eulerAngles.x+10 > 180)
             {
                 isStart = false;
@@ -172,9 +172,9 @@ public class CharacterMoveControl : MonoBehaviour
         }
 
     }
-
     public void FlyControl()
     {
+        
         /*基本姿勢とスピードに応じて力学的な演算を行い、速度ベクトルを調整する*/
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
@@ -190,6 +190,7 @@ public class CharacterMoveControl : MonoBehaviour
         if (1 - (speed / 100) > 0)
         {
             characterPhysics.AddTorque(Time.deltaTime * transform.right * mainAttackAngle * speed * (1 - (speed / 100)));
+           
         }
 
         //加速させる。
