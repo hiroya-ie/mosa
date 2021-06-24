@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CharacterMoveControl : MonoBehaviour
 {
-
+    int operationMode = 1;
+    bool invert = true;
     bool isAcceleration;
     //attitudeControl()用関数
     Vector3 basicAttitude;//基本姿勢
@@ -58,6 +59,7 @@ public class CharacterMoveControl : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.gameObject.SetActive(false);
+        isDead = false;
     }
 
 
@@ -128,7 +130,6 @@ public class CharacterMoveControl : MonoBehaviour
 
         if (isStart == true)//ゲーム開始アニメーション
         {
-
             if (transform.rotation.eulerAngles.x+10 > 180)
             {
                 isStart = false;
@@ -141,26 +142,64 @@ public class CharacterMoveControl : MonoBehaviour
         }
 
         //スピードによって操作の応答性を変える
-        dragVector *= speed / 100;
+        Vector3 adjustedDragVector = dragVector * speed / 100;
 
 
-
-        //基本姿勢を変換
+        characterPhysics.maxAngularVelocity = 7;//回転の上限
 
         //前方への速度を算出
-        float forwardSpeed = Vector3.Dot(characterPhysics.velocity,transform.forward);
-        //水平尾翼で生まれる力を計算
-        float pitch = forwardSpeed * dragVector.y / sensitivity.y;
-        float roll = forwardSpeed * dragVector.x / sensitivity.x;
+        float forwardSpeed = Vector3.Dot(characterPhysics.velocity, transform.forward);
+        //操作モードによって操作を変える
 
-        //姿勢に反映
-        characterPhysics.maxAngularVelocity = 7;//回転の上限
-        characterPhysics.AddTorque(transform.right * pitch*Time.deltaTime);
-        characterPhysics.AddTorque(-transform.forward * roll * Time.deltaTime);
+        if (operationMode == 0)
+        {
+            //キャラの角度に関係なく、真上に上昇
+            //水平尾翼で生まれる力を計算
+            float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
+            if (invert == false && isStart == false)
+            {
+                pitch *= -1;//上下反転モードがオフだったら反転させる。
+            }
+            characterPhysics.AddTorque(transform.right * pitch * Time.deltaTime);
+            //横の移動は、機体を傾ける→上昇とヨーを同時に行う
+            float rollAngle = transform.localEulerAngles.z;
+            if (rollAngle >= 181)
+            {
+                rollAngle -= 360;
+            }
+            //左に傾くと+、右に傾くと-
+            float angleDiff = rollAngle - (-60 * dragVector.x / 200);
+            //Debug.Log(-45*dragVector.x / 200);
+            characterPhysics.AddTorque(transform.forward * -angleDiff * Time.deltaTime*7);//傾き制御
+            characterPhysics.AddTorque(transform.right * Mathf.Abs(Mathf.Sin(rollAngle * Mathf.Deg2Rad)) * Time.deltaTime* -Mathf.Abs(adjustedDragVector.x));//曲がるためのピッチ制御
+            characterPhysics.AddTorque(transform.up * Mathf.Cos(rollAngle * Mathf.Deg2Rad) * Time.deltaTime * adjustedDragVector.x*5);
+            
 
+            //ターンなどで上下反転したときに、操舵中は回転させない
+        }
+        else if (operationMode == 1)
+        {
+            float rollAngle = transform.localEulerAngles.z;
+            if (rollAngle >= 181)
+            {
+                rollAngle -= 360;
+            }
+            Debug.Log(rollAngle + "-"+(-45 * dragVector.x / 200) + "=" + (rollAngle - (-45 * dragVector.x / 200)));
+            //基本姿勢を変換
+            //水平尾翼で生まれる力を計算
+            float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
+            float roll = forwardSpeed * adjustedDragVector.x / sensitivity.x;
+            if (invert == false && isStart==false)
+            {
+                pitch *= -1;//上下反転モードがオフだったら反転させる。
+            }
+            //姿勢に反映
+            characterPhysics.AddTorque(transform.right * pitch * Time.deltaTime);
+            characterPhysics.AddTorque(-transform.forward * roll * Time.deltaTime);
 
-
+        }
         FlyControl();
+
         //ニアミス判定実験
         if (Input.GetKey("o"))
         {
@@ -173,8 +212,11 @@ public class CharacterMoveControl : MonoBehaviour
 
     }
 
+
+
     public void FlyControl()
     {
+        
         /*基本姿勢とスピードに応じて力学的な演算を行い、速度ベクトルを調整する*/
         Rigidbody characterPhysics = GetComponent<Rigidbody>();
         //進行方向と基本姿勢の角度差を求める。揚力、抗力が決まるため。基本姿勢の法線ベクトルと進行方向との角度差を使う。
@@ -190,6 +232,7 @@ public class CharacterMoveControl : MonoBehaviour
         if (1 - (speed / 100) > 0)
         {
             characterPhysics.AddTorque(Time.deltaTime * transform.right * mainAttackAngle * speed * (1 - (speed / 100)));
+           
         }
 
         //加速させる。

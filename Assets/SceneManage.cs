@@ -76,9 +76,10 @@ public class SceneManage : MonoBehaviour
         if (isContinue == false)
         {
             ScoreManagescript.ScoreReset();
+            playerObject.GetComponent<CharacterMoveControl>().StartSet();
         }
         //�Q�[���J�n���̉��o
-        playerObject.GetComponent<CharacterMoveControl>().StartSet();
+        isContinue = false;
 
         currentSceneNum = 2;
     }
