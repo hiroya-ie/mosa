@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class SoundManage : MonoBehaviour
 {
-    public AudioClip windSound;
-	private AudioSource audioSource;
+	public AudioSource NoiseAudioSource,SEAudioSource,BGMAudioSoucrce;
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = this.GetComponent<AudioSource> ();
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AccelerateSound()
     {
-        //audioSource.PlayOneShot(windSound);
+        SEAudioSource.Play();
     }
 }

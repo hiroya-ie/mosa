@@ -34,6 +34,7 @@ public class GameEvent : MonoBehaviour
         //ƒXƒRƒA‰ÁZ
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(200);
         //‰Á‘¬‚·‚é‰¹‚ğÄ¶
+        Camera.main.GetComponent<SoundManage>().AccelerateSound();
     }
 
     public void CrashEvent()

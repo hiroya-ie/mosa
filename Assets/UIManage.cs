@@ -12,19 +12,25 @@ public class UIManage : MonoBehaviour
     public GameObject MainCamera;
     public GameObject Character;
     public Toggle toggle;
-    public Slider NoiseSlider;
-    public AudioSource NoiseAudioSource;
+    public Slider NoiseSlider,SESlider,BGMSlider;
     SceneManage SceneManagescript;
     DataManage DataManagescript;
+    SoundManage SoundManagescript;
     
     void Start()
     {
         SceneManagescript = MainCamera.GetComponent<SceneManage>();
         DataManagescript = MainCamera.GetComponent<DataManage>();
-        //volumeNoise = PlayerPrefs.GetFloat("volumeNoise");
-        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();
-        NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript = MainCamera.GetComponent<SoundManage>();
+        
+        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();//全変数へデータロード
+        
+        SoundManagescript.NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript.SEAudioSource.volume = volumeSE;
+        //SoundManagescript.BGMAudioSource.volume = volumeBGM;
         NoiseSlider.value = volumeNoise;
+        SESlider.value = volumeSE;
+        BGMSlider.value = volumeBGM;
     }
     
     public void TitleUIGameStartClick()
@@ -32,6 +38,7 @@ public class UIManage : MonoBehaviour
         SceneManagescript.ChangeScene(2); //2でゲームスタート
         Time.timeScale = 1;
         Character.SetActive(true);
+        SceneManagescript.isContinue = true;
     }
     
     public void TitleUIConfigClick()
@@ -66,21 +73,30 @@ public class UIManage : MonoBehaviour
         //Debug.Log (toggle.isOn);
     }
     
-    public void ConfigUIVolumeSESlide(){}
+    public void ConfigUIVolumeSESlide()
+    {
+        volumeSE = SESlider.normalizedValue;
+        SoundManagescript.SEAudioSource.volume = volumeSE;
+    }
     
     public void ConfigUIVolumeNoiseSlide()
     {
         volumeNoise = NoiseSlider.normalizedValue;
         //Debug.Log (volumeNoise);
-        NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript.NoiseAudioSource.volume = volumeNoise;
     }
     
-    public void ConfigUIVolumeBGMSlide(){}
+    public void ConfigUIVolumeBGMSlide()
+    {
+        volumeBGM = BGMSlider.normalizedValue;
+        //SoundManagescript.BGMAudioSource.volume = volumeBGM;
+    }
     
     public void ConfigUIReturnClick()
     {
         DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather);
-        SceneManagescript.ChangeScene(0); //0でタイトル
+        if (SceneManagescript.isContinue){SceneManagescript.ChangeScene(3);}
+        else {SceneManagescript.ChangeScene(0);}
     }
     
     public void GameUIPauseClick()
@@ -92,7 +108,6 @@ public class UIManage : MonoBehaviour
     public void MenuUIContinueClick()
     {
         Time.timeScale = 1;
-        SceneManagescript.isContinue = true;
         SceneManagescript.ChangeScene(2);
     }
     
@@ -106,6 +121,11 @@ public class UIManage : MonoBehaviour
         Character.GetComponent<CharacterMoveControl>().ResetCharacter();
         SceneManagescript.ChangeScene(0); //0でタイトル
         SceneManagescript.isContinue = false;
+    }
+    
+    public void  MenuUIConfigClick()
+    {
+        SceneManagescript.ChangeScene(1);
     }
     
     
