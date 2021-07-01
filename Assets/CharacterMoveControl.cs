@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CharacterMoveControl : MonoBehaviour
 {
+    //設定可能変数
     int operationMode = 1;
     bool invert = true;
+    Vector3 sensitivity = new Vector3(60, 40, 0);
+
     bool isAcceleration;
     //attitudeControl()用関数
     Vector3 basicAttitude;//基本姿勢
     Vector3 firstMousePosition;
     Vector3 mousePosition;
-    //float K = 0.01f; //空気抵抗の比例係数
-    Vector3 sensitivity = new Vector3(60, 40, 0);
     int isNear;
     //FlyControl()用関数
     float speed;
@@ -64,6 +65,7 @@ public class CharacterMoveControl : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.gameObject.SetActive(false);
+        scoreDisplay.transform.position = new Vector3(4, -27.85526f, 12.53788f);
         isDead = false;
     }
 
@@ -93,14 +95,13 @@ public class CharacterMoveControl : MonoBehaviour
             return;
         }
 
-        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*15, Time.deltaTime*5);
+        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*10, Time.deltaTime*5);
         scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*20));
-        ////今の角度に加算したい角度差を足す？
         scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
         Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
         Vector3 scoreAngleVector = new Vector3(Mathf.Cos(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
         float characterScoreAngle = Vector3.SignedAngle(scoreAngleVector, characterAngleVector, new Vector3(0, 0, 1));
-        currentScoreAngle = currentScoreAngle + characterScoreAngle / 100;
+        currentScoreAngle = currentScoreAngle + characterScoreAngle * (Time.deltaTime * 5);
 
         /*ドラッグを検出して基本姿勢に反映する。*/
         Vector3 dragVector = new Vector3(0,0,0);

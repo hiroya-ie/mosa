@@ -110,8 +110,8 @@ public class UIManage : MonoBehaviour
     public void MenuUIContinueClick()
     {
         Time.timeScale = 1;
-        SceneManagescript.ChangeScene(2);
         SceneManagescript.isContinue = true;
+        SceneManagescript.ChangeScene(2);
     }
     
     public void MenuUIExitClick()
