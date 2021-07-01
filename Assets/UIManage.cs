@@ -119,6 +119,7 @@ public class UIManage : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManagescript.ChangeScene(2);
+        SceneManagescript.isContinue = true;
     }
     
     public void MenuUIExitClick()

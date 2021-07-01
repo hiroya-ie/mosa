@@ -25,6 +25,11 @@ public class CharacterMoveControl : MonoBehaviour
     float deadCount = 0;
     //カメラ操作
     Vector3 cameraPos;
+    //スコアを動かす
+    [SerializeField] GameObject scoreDisplay;
+    float currentScoreAngle;
+    
+    
 
     //実験中
     float accelCount;
@@ -62,6 +67,15 @@ public class CharacterMoveControl : MonoBehaviour
         isDead = false;
     }
 
+    private float RollAngle()
+    {
+        float rollAngle = transform.localEulerAngles.z;
+        if (rollAngle >= 181)
+        {
+            rollAngle -= 360;
+        }
+        return rollAngle;
+    }
 
     public void AttitudeControl()
     {
@@ -79,7 +93,14 @@ public class CharacterMoveControl : MonoBehaviour
             return;
         }
 
-
+        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*15, Time.deltaTime*5);
+        scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*20));
+        ////今の角度に加算したい角度差を足す？
+        scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
+        Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
+        Vector3 scoreAngleVector = new Vector3(Mathf.Cos(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
+        float characterScoreAngle = Vector3.SignedAngle(scoreAngleVector, characterAngleVector, new Vector3(0, 0, 1));
+        currentScoreAngle = currentScoreAngle + characterScoreAngle / 100;
 
         /*ドラッグを検出して基本姿勢に反映する。*/
         Vector3 dragVector = new Vector3(0,0,0);
@@ -153,6 +174,7 @@ public class CharacterMoveControl : MonoBehaviour
 
         if (operationMode == 0)
         {
+            Debug.Log("standard");
             //キャラの角度に関係なく、真上に上昇
             //水平尾翼で生まれる力を計算
             float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
@@ -162,29 +184,19 @@ public class CharacterMoveControl : MonoBehaviour
             }
             characterPhysics.AddTorque(transform.right * pitch * Time.deltaTime);
             //横の移動は、機体を傾ける→上昇とヨーを同時に行う
-            float rollAngle = transform.localEulerAngles.z;
-            if (rollAngle >= 181)
-            {
-                rollAngle -= 360;
-            }
             //左に傾くと+、右に傾くと-
-            float angleDiff = rollAngle - (-60 * dragVector.x / 200);
+            float angleDiff = RollAngle() - (-60 * dragVector.x / 200);
             //Debug.Log(-45*dragVector.x / 200);
             characterPhysics.AddTorque(transform.forward * -angleDiff * Time.deltaTime*7);//傾き制御
-            characterPhysics.AddTorque(transform.right * Mathf.Abs(Mathf.Sin(rollAngle * Mathf.Deg2Rad)) * Time.deltaTime* -Mathf.Abs(adjustedDragVector.x));//曲がるためのピッチ制御
-            characterPhysics.AddTorque(transform.up * Mathf.Cos(rollAngle * Mathf.Deg2Rad) * Time.deltaTime * adjustedDragVector.x*5);
+            characterPhysics.AddTorque(transform.right * Mathf.Abs(Mathf.Sin(RollAngle() * Mathf.Deg2Rad)) * Time.deltaTime* -Mathf.Abs(adjustedDragVector.x));//曲がるためのピッチ制御
+            characterPhysics.AddTorque(transform.up * Mathf.Cos(RollAngle() * Mathf.Deg2Rad) * Time.deltaTime * adjustedDragVector.x*5);
             
 
             //ターンなどで上下反転したときに、操舵中は回転させない
         }
         else if (operationMode == 1)
         {
-            float rollAngle = transform.localEulerAngles.z;
-            if (rollAngle >= 181)
-            {
-                rollAngle -= 360;
-            }
-            Debug.Log(rollAngle + "-"+(-45 * dragVector.x / 200) + "=" + (rollAngle - (-45 * dragVector.x / 200)));
+            //Debug.Log(rollAngle + "-"+(-45 * dragVector.x / 200) + "=" + (rollAngle - (-45 * dragVector.x / 200)));
             //基本姿勢を変換
             //水平尾翼で生まれる力を計算
             float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
