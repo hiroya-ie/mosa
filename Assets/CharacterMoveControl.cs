@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMoveControl : MonoBehaviour
 {
     //İ’è‰Â”\•Ï”
-    int operationMode = 1;
+    public int operationMode = 1;
     bool invert = true;
     Vector3 sensitivity = new Vector3(60, 40, 0);
 

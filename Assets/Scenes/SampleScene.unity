@@ -483,6 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a0840f7a013ef4890c6d50b1e6831c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  operationMode: 1
   body: {fileID: 744605913}
   scoreDisplay: {fileID: 244224766}
 --- !u!114 &51632229
@@ -7853,6 +7854,8 @@ MonoBehaviour:
   MainCamera: {fileID: 963194225}
   Character: {fileID: 51632225}
   toggle: {fileID: 1528663468}
+  standardButton: {fileID: 0}
+  expertButton: {fileID: 0}
   NoiseSlider: {fileID: 600733382}
   SESlider: {fileID: 485662647}
   BGMSlider: {fileID: 337220636}
@@ -14067,8 +14070,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoiseAudioSource: {fileID: 963194235}
-  SEAudioSource: {fileID: 963194236}
-  BGMAudioSoucrce: {fileID: 0}
+  SEAccelerateAudioSource: {fileID: 963194235}
+  SECrashAudioSource: {fileID: 963194235}
+  BGMAudioSoucrce: {fileID: 963194235}
 --- !u!82 &963194235
 AudioSource:
   m_ObjectHideFlags: 0
