@@ -73,9 +73,10 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
         ScoreDisplay.SetActive(true);
-        if (isContinue == false)//最初から
+        if (isContinue == false)
         {
             ScoreManagescript.ScoreReset();
+            playerObject.GetComponent<CharacterMoveControl>().StartSet();
         }
         //�Q�[���J�n���̉��o
         isContinue = false;
