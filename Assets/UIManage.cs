@@ -38,7 +38,9 @@ public class UIManage : MonoBehaviour
         SceneManagescript.ChangeScene(2); //2でゲームスタート
         Time.timeScale = 1;
         Character.SetActive(true);
-        SceneManagescript.isContinue = true;
+        SceneManagescript.isContinue = false;
+        Character.GetComponent<CharacterMoveControl>().StartSet();
+
     }
     
     public void TitleUIConfigClick()
