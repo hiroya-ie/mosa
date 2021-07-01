@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class SoundManage : MonoBehaviour
 {
-	public AudioSource NoiseAudioSource,SEAudioSource,BGMAudioSoucrce;
+	public AudioSource NoiseAudioSource,SEAccelerateAudioSource,SECrashAudioSource,BGMAudioSoucrce;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    public void AccelerateSound()
-    {
-        SEAudioSource.Play();
-    }
+
+    public void AccelerateSound(){SEAccelerateAudioSource.Play();}
+    
+    public void  CrashSound(){SECrashAudioSource.Play();}
+    
 }
