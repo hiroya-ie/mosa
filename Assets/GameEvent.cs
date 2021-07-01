@@ -13,6 +13,7 @@ public class GameEvent : MonoBehaviour
         if (collision.gameObject.tag == "crash")
         {
             CrashEvent();
+            Camera.main.GetComponent<SoundManage>().CrashSound();
         }
     }
     //“–‚½‚Á‚½‚ç’Ê‚è”²‚¯‚éƒ^ƒCƒv‚Ì“–‚½‚è”»’è

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterMoveControl : MonoBehaviour
 {
-    int operationMode = 1;
+    public int operationMode = 1;
     bool invert = true;
     bool isAcceleration;
     //attitudeControl()ópä÷êî

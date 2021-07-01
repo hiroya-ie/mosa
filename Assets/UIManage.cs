@@ -9,9 +9,9 @@ public class UIManage : MonoBehaviour
     public int highscore,score,operationMode,resolution,effect,weather;
     public float volumeSE,volumeNoise,volumeBGM;
     public bool invert;
-    public GameObject MainCamera;
-    public GameObject Character;
+    public GameObject MainCamera,Character;
     public Toggle toggle;
+    public Button standardButton,expertButton;
     public Slider NoiseSlider,SESlider,BGMSlider;
     SceneManage SceneManagescript;
     DataManage DataManagescript;
@@ -26,11 +26,14 @@ public class UIManage : MonoBehaviour
         (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();//全変数へデータロード
         
         SoundManagescript.NoiseAudioSource.volume = volumeNoise;
-        SoundManagescript.SEAudioSource.volume = volumeSE;
+        SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
+        SoundManagescript.SECrashAudioSource.volume = volumeSE;
         //SoundManagescript.BGMAudioSource.volume = volumeBGM;
         NoiseSlider.value = volumeNoise;
         SESlider.value = volumeSE;
         BGMSlider.value = volumeBGM;
+        
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void TitleUIGameStartClick()
@@ -59,12 +62,18 @@ public class UIManage : MonoBehaviour
     
     public void ConfigUIOpStandardClick()
     {
+        standardButton.GetComponent<Image>().color=Color.black;
+        expertButton.GetComponent<Image>().color=Color.white;
         operationMode = 0;
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void ConfigUIOpExpertClick()
     {
+        standardButton.GetComponent<Image>().color=Color.white;
+        expertButton.GetComponent<Image>().color=Color.black;
         operationMode = 1;
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void ConfigUIInvertClick()
@@ -76,7 +85,8 @@ public class UIManage : MonoBehaviour
     public void ConfigUIVolumeSESlide()
     {
         volumeSE = SESlider.normalizedValue;
-        SoundManagescript.SEAudioSource.volume = volumeSE;
+        SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
+        SoundManagescript.SECrashAudioSource.volume = volumeSE;
     }
     
     public void ConfigUIVolumeNoiseSlide()
