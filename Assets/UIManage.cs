@@ -7,12 +7,12 @@ public class UIManage : MonoBehaviour
 {
     // Start is called before the first frame update
     public int highscore,score,operationMode,resolution,effect,weather;
-    public float volumeSE,volumeNoise,volumeBGM;
+    public float volumeSE,volumeNoise,volumeBGM,XSensitivity,YSensitivity;
     public bool invert;
     public GameObject MainCamera,Character;
     public Toggle toggle;
     public Button standardButton,expertButton;
-    public Slider NoiseSlider,SESlider,BGMSlider;
+    public Slider NoiseSlider,SESlider,BGMSlider,XSlider,YSlider;
     SceneManage SceneManagescript;
     DataManage DataManagescript;
     SoundManage SoundManagescript;
@@ -23,7 +23,7 @@ public class UIManage : MonoBehaviour
         DataManagescript = MainCamera.GetComponent<DataManage>();
         SoundManagescript = MainCamera.GetComponent<SoundManage>();
         
-        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();//全変数へデータロード
+        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity) = DataManagescript.LoadData();//全変数へデータロード
         
         SoundManagescript.NoiseAudioSource.volume = volumeNoise;
         SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
@@ -32,6 +32,8 @@ public class UIManage : MonoBehaviour
         NoiseSlider.value = volumeNoise;
         SESlider.value = volumeSE;
         BGMSlider.value = volumeBGM;
+        XSlider.value = XSensitivity;
+        YSlider.value = YSensitivity;
         
         Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
@@ -102,9 +104,13 @@ public class UIManage : MonoBehaviour
         //SoundManagescript.BGMAudioSource.volume = volumeBGM;
     }
     
+    public void ConfigUISensitivityXSlide(){XSensitivity = XSlider.normalizedValue;}
+    
+    public void ConfigUISensitivityYSlide(){YSensitivity = YSlider.normalizedValue;}
+    
     public void ConfigUIReturnClick()
     {
-        DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather);
+        DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
         if (SceneManagescript.isContinue){SceneManagescript.ChangeScene(3);}
         else {SceneManagescript.ChangeScene(0);}
     }

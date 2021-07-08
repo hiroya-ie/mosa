@@ -8,7 +8,7 @@ public class DataManage : MonoBehaviour
      * データの管理を担う。
      */
     //https://gametukurikata.com/program/savedata
-    public void SaveData(int highscore=-1,int score = -1, int operationMode = -1, float volumeSE = -1, float volumeNoise = -1, float volumeBGM = -1, int resolution = -1, int effect = -1, int weather = -1)
+    public void SaveData(int highscore=-1,int score = -1, int operationMode = -1, float volumeSE = -1, float volumeNoise = -1, float volumeBGM = -1, int resolution = -1, int effect = -1, int weather = -1,float XSensitivity = -1,float YSensitivity = -1)
      {
         /*
          * データをセーブする。
@@ -23,9 +23,11 @@ public class DataManage : MonoBehaviour
         if (resolution != -1) { PlayerPrefs.SetInt("resolution", resolution);}
         if (effect != -1) { PlayerPrefs.SetInt("effect", effect);}
         if (weather != -1) { PlayerPrefs.SetInt("weather", weather);}
+        if (XSensitivity != -1.0) { PlayerPrefs.SetFloat("XSensitivity", XSensitivity);}
+        if (YSensitivity != -1.0) { PlayerPrefs.SetFloat("YSensitivity", XSensitivity);}
     }
 
-    public (int highscore,int score,int operationMode,float volumeSE,float volumeNoise,float VolumeBGM,int resolution,int effect,int weather) LoadData()
+    public (int highscore,int score,int operationMode,float volumeSE,float volumeNoise,float VolumeBGM,int resolution,int effect,int weather,float XSensitivity,float YSensitivity) LoadData()
     {
         /*
          * データをロードする
@@ -40,7 +42,9 @@ public class DataManage : MonoBehaviour
         int resolution = PlayerPrefs.GetInt("resolution", 1);
         int effect = PlayerPrefs.GetInt("effect", 1);
         int weather = PlayerPrefs.GetInt("weather", 1);
-        return (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather);
+        float XSensitivity = PlayerPrefs.GetFloat("XSensitivity", 50);
+        float YSensitivity = PlayerPrefs.GetFloat("YSensitivity", 50);
+        return (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
     }
 
     public void ResetData()
@@ -54,5 +58,7 @@ public class DataManage : MonoBehaviour
         PlayerPrefs.DeleteKey("resolution");
         PlayerPrefs.DeleteKey("effect");
         PlayerPrefs.DeleteKey("weather");
+        PlayerPrefs.DeleteKey("XSensitivity");
+        PlayerPrefs.DeleteKey("YSensitivity");
     }
 }
