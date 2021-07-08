@@ -52,7 +52,7 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
         ScoreDisplay.SetActive(false);
-        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
+        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
         highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         currentSceneNum = 0;
         isContinue = false;
