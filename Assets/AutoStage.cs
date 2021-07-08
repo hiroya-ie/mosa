@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoStage : MonoBehaviour
 {
 
-    int StageSize = 600;
+    int StageSize = 1000;
     int StageIndex;
 
     public Transform Target;//Unitychan
