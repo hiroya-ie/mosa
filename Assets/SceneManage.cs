@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneManage : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SceneManage : MonoBehaviour
     public bool isContinue;
     public GameObject ScoreDisplay;
     public GameObject Character;
+
     [SerializeField] GameObject TitlePanel;
     [SerializeField] GameObject GamePanel;
     [SerializeField] GameObject ConfigPanel;
@@ -30,6 +32,7 @@ public class SceneManage : MonoBehaviour
         switch(sceneNum)
         {
             case 0:
+                SceneManager.LoadScene("SampleScene");
                 LoadTitle();
                 break;
             case 1:
