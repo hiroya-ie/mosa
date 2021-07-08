@@ -29,7 +29,7 @@ public class CharacterMoveControl : MonoBehaviour
     //ƒXƒRƒA‚ð“®‚©‚·
     [SerializeField] GameObject scoreDisplay;
     float currentScoreAngle;
-    
+    float cameraAttitude;
     
 
     //ŽÀŒ±’†
@@ -86,16 +86,25 @@ public class CharacterMoveControl : MonoBehaviour
         {
             Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position,isDead);
             this.gameObject.GetComponent<Rigidbody>().angularDrag = 0;
+            if (deadCount == 0)
+            {
+                cameraAttitude = Camera.main.transform.position.y+1;
+            }
             deadCount += Time.deltaTime;
             if (deadCount > 6)
             {
+                
                 deadCount = 0;
                 GameOver();
+            }
+            else
+            {
+                scoreDisplay.gameObject.transform.position = new Vector3(Camera.main.transform.position.x, cameraAttitude, Camera.main.transform.position.z);
             }
             return;
         }
 
-        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*10, Time.deltaTime*5);
+        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*3, Time.deltaTime*5);
         scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*20));
         scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
         Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);

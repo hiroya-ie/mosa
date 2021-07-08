@@ -55,6 +55,7 @@ public class SceneManage : MonoBehaviour
         (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
         highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         currentSceneNum = 0;
+        isContinue = false;
     }
     
     public void LoadConfig()
