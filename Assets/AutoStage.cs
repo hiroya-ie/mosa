@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class AutoStage : MonoBehaviour
 {
 
@@ -71,5 +73,17 @@ public class AutoStage : MonoBehaviour
         StageList.RemoveAt(0);
         Destroy(oldStage);
     }
-    
+
+    void ReloadStage()
+    {
+        /*
+        int nextStage = Random.Range(0, stagenum.Length);
+        for(int i=0; i<4; i++){
+            StageList.RemoveAt(i);
+            Destroy(StageList[i]);
+        }
+        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -300,0), Quaternion.identity);
+    */
+        SceneManager.LoadScene(0);
+    } 
 }

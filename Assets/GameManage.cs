@@ -8,7 +8,7 @@ public class GameManage : MonoBehaviour
     CharacterMoveControl characterMoveControl;
     SceneManage sceneManage;
 
-    //å®Ÿé¨“ã€‚ãƒã‚¤ã‚¹ã‚³ã‚¢ã®ãƒ†ã‚¹ãƒˆã€‚
+    //ÀŒ±BƒnƒCƒXƒRƒA‚ÌƒeƒXƒgB
     [SerializeField] GameObject highscoredisplay;
     // Start is called before the first frame update
     void Start()
@@ -18,18 +18,18 @@ public class GameManage : MonoBehaviour
         Camera.main.GetComponent<ScoreManage>().ScoreReset();
         sceneManage = Camera.main.GetComponent<SceneManage>();
 
-        //å®Ÿé¨“ã€‚ãƒã‚¤ã‚¹ã‚³ã‚¢ã®ãƒ†ã‚¹ãƒˆã€‚
-        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
+        //ÀŒ±BƒnƒCƒXƒRƒA‚ÌƒeƒXƒgB
+        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
         highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
-        //è¨­å®šèª­ã¿è¾¼ã¿
-        //ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢èµ·å‹•
+        //İ’è“Ç‚İ‚İ
+        //ƒ^ƒCƒgƒ‹‰æ–Ê‹N“®
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ã‚·ãƒ¼ãƒ³ç•ªå·é–‹å§‹
-        //ã‚²ãƒ¼ãƒ é–¢é€£ã®é–¢æ•°å‘¼ã³å‡ºã—
+        //ƒV[ƒ“”Ô†ŠJn
+        //ƒQ[ƒ€ŠÖ˜A‚ÌŠÖ”ŒÄ‚Ño‚µ
         switch (sceneManage.GetScene())
         {
             case 0:
@@ -43,7 +43,7 @@ public class GameManage : MonoBehaviour
                 break;
         }
 
-        //å®Ÿé¨“ã€‚ãƒã‚¤ã‚¹ã‚³ã‚¢ã®ãƒ†ã‚¹ãƒˆã€‚
+        //ÀŒ±BƒnƒCƒXƒRƒA‚ÌƒeƒXƒgB
         if (Input.GetKeyDown("e"))
         {
             Camera.main.GetComponent<ScoreManage>().UpdateHighScore();

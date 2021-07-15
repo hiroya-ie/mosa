@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneManage : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SceneManage : MonoBehaviour
     public bool isContinue;
     public GameObject ScoreDisplay;
     public GameObject Character;
+
     [SerializeField] GameObject TitlePanel;
     [SerializeField] GameObject GamePanel;
     [SerializeField] GameObject ConfigPanel;
@@ -30,6 +32,7 @@ public class SceneManage : MonoBehaviour
         switch(sceneNum)
         {
             case 0:
+                SceneManager.LoadScene("SampleScene");
                 LoadTitle();
                 break;
             case 1:
@@ -52,9 +55,10 @@ public class SceneManage : MonoBehaviour
         ConfigPanel.SetActive(false);
         MenuPanel.SetActive(false);
         ScoreDisplay.SetActive(false);
-        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather) = Camera.main.GetComponent<DataManage>().LoadData();
+        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
         highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         currentSceneNum = 0;
+        isContinue = false;
     }
     
     public void LoadConfig()
@@ -76,9 +80,10 @@ public class SceneManage : MonoBehaviour
         if (isContinue == false)
         {
             ScoreManagescript.ScoreReset();
+            playerObject.GetComponent<CharacterMoveControl>().StartSet();
         }
         //�Q�[���J�n���̉��o
-        playerObject.GetComponent<CharacterMoveControl>().StartSet();
+        isContinue = false;
 
         currentSceneNum = 2;
     }

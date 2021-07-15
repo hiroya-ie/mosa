@@ -13,6 +13,7 @@ public class GameEvent : MonoBehaviour
         if (collision.gameObject.tag == "crash")
         {
             CrashEvent();
+            Camera.main.GetComponent<SoundManage>().CrashSound();
         }
     }
     //当たったら通り抜けるタイプの当たり判定
@@ -34,6 +35,7 @@ public class GameEvent : MonoBehaviour
         //スコア加算
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(200);
         //加速する音を再生
+        Camera.main.GetComponent<SoundManage>().AccelerateSound();
     }
 
     public void CrashEvent()

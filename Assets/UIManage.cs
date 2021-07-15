@@ -7,24 +7,35 @@ public class UIManage : MonoBehaviour
 {
     // Start is called before the first frame update
     public int highscore,score,operationMode,resolution,effect,weather;
-    public float volumeSE,volumeNoise,volumeBGM;
+    public float volumeSE,volumeNoise,volumeBGM,XSensitivity,YSensitivity;
     public bool invert;
-    public GameObject MainCamera;
-    public GameObject Character;
+    public GameObject MainCamera,Character;
     public Toggle toggle;
-    public Slider NoiseSlider;
-    public AudioSource NoiseAudioSource;
+    public Button standardButton,expertButton;
+    public Slider NoiseSlider,SESlider,BGMSlider,XSlider,YSlider;
     SceneManage SceneManagescript;
     DataManage DataManagescript;
+    SoundManage SoundManagescript;
     
     void Start()
     {
         SceneManagescript = MainCamera.GetComponent<SceneManage>();
         DataManagescript = MainCamera.GetComponent<DataManage>();
-        //volumeNoise = PlayerPrefs.GetFloat("volumeNoise");
-        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather) = DataManagescript.LoadData();
-        NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript = MainCamera.GetComponent<SoundManage>();
+        
+        (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity) = DataManagescript.LoadData();//全変数へデータロード
+        
+        SoundManagescript.NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
+        SoundManagescript.SECrashAudioSource.volume = volumeSE;
+        //SoundManagescript.BGMAudioSource.volume = volumeBGM;
         NoiseSlider.value = volumeNoise;
+        SESlider.value = volumeSE;
+        BGMSlider.value = volumeBGM;
+        XSlider.value = XSensitivity;
+        YSlider.value = YSensitivity;
+        
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void TitleUIGameStartClick()
@@ -32,6 +43,7 @@ public class UIManage : MonoBehaviour
         SceneManagescript.ChangeScene(2); //2でゲームスタート
         Time.timeScale = 1;
         Character.SetActive(true);
+        SceneManagescript.isContinue = true;
     }
     
     public void TitleUIConfigClick()
@@ -52,12 +64,18 @@ public class UIManage : MonoBehaviour
     
     public void ConfigUIOpStandardClick()
     {
+        standardButton.GetComponent<Image>().color=Color.black;
+        expertButton.GetComponent<Image>().color=Color.white;
         operationMode = 0;
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void ConfigUIOpExpertClick()
     {
+        standardButton.GetComponent<Image>().color=Color.white;
+        expertButton.GetComponent<Image>().color=Color.black;
         operationMode = 1;
+        Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
     }
     
     public void ConfigUIInvertClick()
@@ -66,21 +84,35 @@ public class UIManage : MonoBehaviour
         //Debug.Log (toggle.isOn);
     }
     
-    public void ConfigUIVolumeSESlide(){}
+    public void ConfigUIVolumeSESlide()
+    {
+        volumeSE = SESlider.normalizedValue;
+        SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
+        SoundManagescript.SECrashAudioSource.volume = volumeSE;
+    }
     
     public void ConfigUIVolumeNoiseSlide()
     {
         volumeNoise = NoiseSlider.normalizedValue;
         //Debug.Log (volumeNoise);
-        NoiseAudioSource.volume = volumeNoise;
+        SoundManagescript.NoiseAudioSource.volume = volumeNoise;
     }
     
-    public void ConfigUIVolumeBGMSlide(){}
+    public void ConfigUIVolumeBGMSlide()
+    {
+        volumeBGM = BGMSlider.normalizedValue;
+        //SoundManagescript.BGMAudioSource.volume = volumeBGM;
+    }
+    
+    public void ConfigUISensitivityXSlide(){XSensitivity = XSlider.normalizedValue;}
+    
+    public void ConfigUISensitivityYSlide(){YSensitivity = YSlider.normalizedValue;}
     
     public void ConfigUIReturnClick()
     {
-        DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather);
-        SceneManagescript.ChangeScene(0); //0でタイトル
+        DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
+        if (SceneManagescript.isContinue){SceneManagescript.ChangeScene(3);}
+        else {SceneManagescript.ChangeScene(0);}
     }
     
     public void GameUIPauseClick()
@@ -106,6 +138,11 @@ public class UIManage : MonoBehaviour
         Character.GetComponent<CharacterMoveControl>().ResetCharacter();
         SceneManagescript.ChangeScene(0); //0でタイトル
         SceneManagescript.isContinue = false;
+    }
+    
+    public void  MenuUIConfigClick()
+    {
+        SceneManagescript.ChangeScene(1);
     }
     
     
