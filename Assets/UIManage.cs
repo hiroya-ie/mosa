@@ -36,6 +36,9 @@ public class UIManage : MonoBehaviour
         YSlider.value = YSensitivity;
         
         Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
+        Character.GetComponent<CharacterMoveControl>().invert = invert;
+        Character.GetComponent<CharacterMoveControl>().XSensitivity = XSensitivity;
+        Character.GetComponent<CharacterMoveControl>().YSensitivity = YSensitivity;
     }
     
     public void TitleUIGameStartClick()
@@ -82,6 +85,7 @@ public class UIManage : MonoBehaviour
     {
         invert = toggle.isOn;
         //Debug.Log (toggle.isOn);
+        Character.GetComponent<CharacterMoveControl>().invert = invert;
     }
     
     public void ConfigUIVolumeSESlide()
@@ -104,9 +108,17 @@ public class UIManage : MonoBehaviour
         //SoundManagescript.BGMAudioSource.volume = volumeBGM;
     }
     
-    public void ConfigUISensitivityXSlide(){XSensitivity = XSlider.normalizedValue;}
+    public void ConfigUISensitivityXSlide()
+    {
+        XSensitivity = XSlider.normalizedValue * 100;
+        Character.GetComponent<CharacterMoveControl>().XSensitivity = XSensitivity;
+    }
     
-    public void ConfigUISensitivityYSlide(){YSensitivity = YSlider.normalizedValue;}
+    public void ConfigUISensitivityYSlide()
+    {
+        YSensitivity = YSlider.normalizedValue * 100;
+        Character.GetComponent<CharacterMoveControl>().YSensitivity = YSensitivity;
+    }
     
     public void ConfigUIReturnClick()
     {
@@ -124,7 +136,6 @@ public class UIManage : MonoBehaviour
     public void MenuUIContinueClick()
     {
         Time.timeScale = 1;
-        SceneManagescript.isContinue = true;
         SceneManagescript.ChangeScene(2);
     }
     

@@ -6,8 +6,11 @@ public class CharacterMoveControl : MonoBehaviour
 {
     //Ý’è‰Â”\•Ï”
     public int operationMode = 1;
-    bool invert = true;
-    Vector3 sensitivity = new Vector3(60, 40, 0);
+    public bool invert = true;
+    public Vector3 sensitivity = new Vector3(60, 40, 0);
+    [SerializeField] GameObject Canvas;
+    public float XSensitivity;
+    public float YSensitivity;
 
     bool isAcceleration;
     //attitudeControl()—pŠÖ”
@@ -164,9 +167,12 @@ public class CharacterMoveControl : MonoBehaviour
             if (transform.rotation.eulerAngles.x+10 > 180)
             {
                 isStart = false;
+                Debug.Log (XSensitivity);
+                sensitivity = new Vector3(XSensitivity, YSensitivity, 0);
             }
             else
             {
+                sensitivity = new Vector3(60, 40, 0);
                 dragVector = new Vector3(0, -10 * transform.rotation.eulerAngles.x, 0);
                 characterPhysics.AddForce(transform.forward * 4000 * Time.deltaTime);
             }
