@@ -12,7 +12,7 @@ public class CameraControl : MonoBehaviour
     float yVelocity;
     float zVelocity;
     float traceSpeed = 5f;
-    float TARGET_TRACE_SPEED = 0.3f;
+    float TARGET_TRACE_SPEED = 0.15f;
     float rotateSpeed = 5f;
     float TARGET_ROTATE_SPEED = 0.5f;
     Vector3 cameraPos;
