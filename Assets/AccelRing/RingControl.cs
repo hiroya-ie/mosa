@@ -9,6 +9,8 @@ public class RingControl : MonoBehaviour
     bool Proximity = false;
     public AnimationCurve curve;
     float timeCount = 0;
+    float scale;
+    public bool hit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +21,7 @@ public class RingControl : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(player.transform.position, this.gameObject.transform.position);
-        if (distance < 200&&Proximity==false)
+        if (distance < 200 && Proximity == false)
         {
             Proximity = true;
         }
@@ -27,13 +29,21 @@ public class RingControl : MonoBehaviour
         {
             timeCount += Time.deltaTime;
         }
-        transform.localEulerAngles = new Vector3(90 * curve.Evaluate(timeCount)+45, -90, 90);
-        for(int i = 0; i < slimRing.Length; i++)
+
+        transform.localEulerAngles = new Vector3(90 * curve.Evaluate(timeCount) + 45, -90, 90);
+        if (hit == true)
         {
-            float scale = 1 - curve.Evaluate(timeCount) * ((i + 1) / 5f);
-            slimRing[i].transform.localScale = new Vector3(scale, scale, scale);
-            slimRing[i].transform.localPosition = new Vector3(0, curve.Evaluate(timeCount-i/7f) * ((i + 1) / -20f), 0);
-            slimRing[i].transform.localEulerAngles = new Vector3(0, curve.Evaluate(timeCount) * (i + 1) * -10, 0);
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(1200, 1200, 1200), Time.deltaTime * 5);
         }
+            for (int i = 0; i < slimRing.Length; i++)
+            {
+                scale = 1 - curve.Evaluate(timeCount) * ((i + 1) / 5f);
+                slimRing[i].transform.localScale = new Vector3(scale, scale, scale);
+                slimRing[i].transform.localPosition = new Vector3(0, curve.Evaluate(timeCount - i / 7f) * ((i + 1) / -20f), 0);
+                slimRing[i].transform.localEulerAngles = new Vector3(0, curve.Evaluate(timeCount) * (i + 1) * -10, 0);
+            }
+
+
+
     }
 }

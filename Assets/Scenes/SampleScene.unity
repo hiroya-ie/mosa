@@ -17843,6 +17843,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.data[0].inSlope
+      value: 2.7372687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.data[0].outSlope
+      value: 2.7372687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899059519004071441, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
+      propertyPath: hitCurve.m_Curve.Array.data[0].outWeight
+      value: 0.04090909
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc8fbe133b7035742bb7f0418b8203f4, type: 3}
 --- !u!1 &1476699272
