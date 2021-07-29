@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManage : MonoBehaviour
 {
     public GameObject character;
+    public Text highscoreText;
     CharacterMoveControl characterMoveControl;
     SceneManage sceneManage;
 
@@ -20,7 +22,8 @@ public class GameManage : MonoBehaviour
 
         //実験。ハイスコアのテスト。
         (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
-        highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
+        //highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
+        highscoreText.text = "highscore:" + highscore;
         //設定読み込み
         //タイトル画面起動
     }

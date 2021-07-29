@@ -9,10 +9,11 @@ public class UIManage : MonoBehaviour
     public int highscore,score,operationMode,resolution,effect,weather;
     public float volumeSE,volumeNoise,volumeBGM,XSensitivity,YSensitivity;
     public bool invert;
-    public GameObject MainCamera,Character;
+    public GameObject MainCamera,Character,fog;
     public Toggle toggle;
     public Button standardButton,expertButton;
     public Slider NoiseSlider,SESlider,BGMSlider,XSlider,YSlider;
+    public Dropdown ImageQuality,Effect,Weather;
     SceneManage SceneManagescript;
     DataManage DataManagescript;
     SoundManage SoundManagescript;
@@ -125,6 +126,59 @@ public class UIManage : MonoBehaviour
         DataManagescript.SaveData(highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
         if (SceneManagescript.isContinue){SceneManagescript.ChangeScene(3);}
         else {SceneManagescript.ChangeScene(0);}
+    }
+    
+    public void ConfigUIImageQuality()
+    {
+        resolution = ImageQuality.value;
+        switch(resolution)
+        {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+        }
+    }
+    
+    public void ConfigUIEffect()
+    {
+        resolution = Effect.value;
+        switch(resolution)
+        {
+            case 0:
+                fog.SetActive(true);
+                Debug.Log (Effect.value);
+                break;
+            case 1:
+                fog.SetActive(false);
+                Debug.Log (Effect.value);
+                break;
+            case 2:
+                fog.SetActive(false);
+                break;
+        }   
+    }
+    
+    public void ConfigUIWeather()
+    {
+        weather = Weather.value;
+        switch(resolution)
+        {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+        }
     }
     
     public void GameUIPauseClick()
