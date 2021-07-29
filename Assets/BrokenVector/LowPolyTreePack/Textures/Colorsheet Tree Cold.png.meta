@@ -1,27 +1,15 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow.png.meta
-guid: 4a4bba49286cb7e45900e51ce64711e1
-labels:
-- GalacticStudios
-timeCreated: 1522407185
-=======
 guid: ed297eb21cb5e5e4188600ba2d272554
 timeCreated: 1457640833
->>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Cold.png.meta
 licenseType: Store
 TextureImporter:
   fileIDToRecycleName: {}
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow.png.meta
-    enableMipMap: 1
-=======
     enableMipMap: 0
     sRGBTexture: 1
->>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Cold.png.meta
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -33,17 +21,11 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
-<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow.png.meta
-  maxTextureSize: 2048
-=======
   maxTextureSize: 32
->>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Cold.png.meta
   textureSettings:
     filterMode: 0
     aniso: -1
@@ -51,9 +33,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 1
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
@@ -61,12 +41,10 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
-<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow.png.meta
-  buildTargetSettings: []
-=======
   textureShape: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
@@ -88,7 +66,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
->>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Cold.png.meta
   spriteSheet:
     serializedVersion: 2
     sprites: []
