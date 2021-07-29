@@ -24,6 +24,7 @@ public class GameEvent : MonoBehaviour
         if (other.tag == "ring")
         {
             AccelerateEvent();
+            other.gameObject.GetComponent<RingControl>().hit = true;
         }
     }
 
