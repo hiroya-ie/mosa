@@ -91,7 +91,7 @@ public class CharacterMoveControl : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().angularDrag = 0;
             if (deadCount == 0)
             {
-                cameraAttitude = Camera.main.transform.position.y+1;
+                cameraAttitude = Camera.main.transform.position.y+100;
             }
             deadCount += Time.deltaTime;
             if (deadCount > 6)
@@ -108,7 +108,7 @@ public class CharacterMoveControl : MonoBehaviour
         }
 
         scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*3, Time.deltaTime*5);
-        scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*20));
+        scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*5));
         scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
         Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
         Vector3 scoreAngleVector = new Vector3(Mathf.Cos(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(scoreDisplay.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
@@ -194,7 +194,7 @@ public class CharacterMoveControl : MonoBehaviour
             //キャラの角度に関係なく、真上に上昇
             //水平尾翼で生まれる力を計算
             float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
-            if (invert == false && isStart == false)
+            if (invert == true && isStart == false)
             {
                 pitch *= -1;//上下反転モードがオフだったら反転させる。
             }
@@ -217,7 +217,7 @@ public class CharacterMoveControl : MonoBehaviour
             //水平尾翼で生まれる力を計算
             float pitch = forwardSpeed * adjustedDragVector.y / sensitivity.y;
             float roll = forwardSpeed * adjustedDragVector.x / sensitivity.x;
-            if (invert == false && isStart==false)
+            if (invert == true && isStart==false)
             {
                 pitch *= -1;//上下反転モードがオフだったら反転させる。
             }
@@ -275,7 +275,7 @@ public class CharacterMoveControl : MonoBehaviour
             characterPhysics.AddForce(transform.forward * 20000 * Time.deltaTime);
             accelCount += Time.deltaTime;
         }
-        if (accelCount > 0.3f)//加速終了（実験）
+        if (accelCount > 0.6f)//加速終了（実験）
         {
             isAcceleration = false;
         }
@@ -283,7 +283,7 @@ public class CharacterMoveControl : MonoBehaviour
         //速度ベクトルをカメラに伝える
         if (isStart == false)
         {
-            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position,isDead);
+            Camera.main.GetComponent<CameraControl>().CameraTrace(characterPhysics.velocity, this.gameObject.transform.position+this.gameObject.transform.forward*Vector3.Magnitude(characterPhysics.velocity)/5,isDead);
         }
 
 
