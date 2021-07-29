@@ -11,7 +11,7 @@ public class CameraControl : MonoBehaviour
     float xVelocity;
     float yVelocity;
     float zVelocity;
-    float traceSpeed = 5f;
+    float traceSpeed = 3f;
     float TARGET_TRACE_SPEED = 0.3f;
     float rotateSpeed = 5f;
     float TARGET_ROTATE_SPEED = 0.5f;
@@ -24,24 +24,13 @@ public class CameraControl : MonoBehaviour
          * プレイヤーの進行方向を向きながらプレイヤーを追いかける。
          */
         //角度を変更
-        if (rotateSpeed > TARGET_ROTATE_SPEED)
-        {
-            rotateSpeed -= Time.deltaTime;
-        }
-        else
-        {
-            rotateSpeed = TARGET_ROTATE_SPEED;
-        }
-        if (rotateSpeed < 4.2f)
-        {
-            Vector3 relativePos = playerPos - this.transform.position;
-            Vector3 angle = Quaternion.LookRotation(relativePos).eulerAngles;
+        Vector3 relativePos = (playerPos) - this.transform.position;
+        Vector3 angle = Quaternion.LookRotation(relativePos).eulerAngles;
 
-            float xRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.x, angle.x, ref xVelocity, rotateSpeed);
-            float yRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.y, angle.y, ref yVelocity, rotateSpeed);
-            float zRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.z, angle.z, ref zVelocity, rotateSpeed);
-            transform.eulerAngles = new Vector3(xRotate, yRotate, zRotate);//xyzすべて0になるときにエラー吐くっぽい？
-        }
+        float xRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.x, angle.x, ref xVelocity, rotateSpeed);
+        float yRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.y, angle.y, ref yVelocity, rotateSpeed);
+        float zRotate = Mathf.SmoothDampAngle(this.gameObject.transform.eulerAngles.z, angle.z, ref zVelocity, rotateSpeed);
+        transform.eulerAngles = new Vector3(xRotate, yRotate, zRotate);//xyzすべて0になるときにエラー吐くっぽい？
 
         //transform.rotation = Quaternion.Slerp(this.transform.rotation, angle, 0.1f);
         //プレイヤーを追いかける
@@ -58,10 +47,19 @@ public class CameraControl : MonoBehaviour
         if (isDead == false)
         {
             cameraPos = playerPos - (playerVelocity / 6);
+            if (rotateSpeed > TARGET_ROTATE_SPEED)
+            {
+                rotateSpeed -= Time.deltaTime;
+            }
+            else
+            {
+                rotateSpeed = TARGET_ROTATE_SPEED;
+            }
         }
         else
         {
             cameraPos.y += 0.15f;
+            rotateSpeed += Time.deltaTime;
         }
 
         //transform.position = Vector3.Lerp(this.gameObject.transform.position, cameraPos, Time.deltaTime*10);

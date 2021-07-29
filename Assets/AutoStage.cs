@@ -12,13 +12,16 @@ public class AutoStage : MonoBehaviour
 
     public Transform Target;//Unitychan
     public GameObject[] stagenum;//ステージのプレハブ
+    public GameObject[] stagenum1;
     public int FirstStageIndex;//スタート時にどのインデックスからステージを生成するのか
     public int aheadStage; //事前に生成しておくステージ
     public List<GameObject> StageList = new List<GameObject>();//生成したステージのリスト
+    int stage;
 
     // Start is called before the first frame update
     void Start()
     {
+        stage = Random.Range(0, 2);
         StageIndex = FirstStageIndex - 1;
         StageManager(aheadStage);
     }
@@ -28,25 +31,35 @@ public class AutoStage : MonoBehaviour
     {
         int targetPosIndex = (int)(Target.position.z / StageSize);
 
-        if(targetPosIndex + aheadStage > StageIndex)
+        if (targetPosIndex + aheadStage > StageIndex)
         {
             StageManager(targetPosIndex + aheadStage);
         }
     }
     void StageManager(int maps)
     {
-        if(maps <= StageIndex)
+        if (maps <= StageIndex)
         {
             return;
         }
-
-        for(int i = StageIndex + 1;i <= maps; i++)//指定したステージまで作成する
+        if (stage == 1)
         {
-            GameObject stage = MakeStage(i);
-            StageList.Add(stage);
+            for (int i = StageIndex + 1; i <= maps; i++)//指定したステージまで作成する
+            {
+                GameObject stageObj = MakeStage(i);
+                StageList.Add(stageObj);
+            }
+        }
+        else
+        {
+            for (int i = StageIndex + 1; i <= maps; i++)//指定したステージまで作成する
+            {
+                GameObject stageObj = MakeStage1(i);
+                StageList.Add(stageObj);
+            }
         }
 
-        while(StageList.Count > aheadStage + 1)//古いステージを削除する
+        while (StageList.Count > aheadStage + 1)//古いステージを削除する
         {
             DestroyStage();
         }
@@ -57,14 +70,17 @@ public class AutoStage : MonoBehaviour
     GameObject MakeStage(int index)//ステージを生成する
     {
         int nextStage = Random.Range(0, stagenum.Length);
-        if(nextStage%2 == 0)
-        {
-            GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -300,index * StageSize), Quaternion.identity);
-            return stageObject;
-        }else{
-            GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -300,index * StageSize), Quaternion.identity);
-            return stageObject;
-        }
+
+        GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -300, index * StageSize), Quaternion.identity);
+        return stageObject;
+    }
+
+    GameObject MakeStage1(int index)//ステージを生成する
+    {
+        int nextStage = Random.Range(0, stagenum.Length);
+
+        GameObject stageObject = (GameObject)Instantiate(stagenum1[nextStage], new Vector3(0, -300, index * StageSize), Quaternion.identity);
+        return stageObject;
     }
 
     void DestroyStage()
@@ -85,5 +101,5 @@ public class AutoStage : MonoBehaviour
         GameObject stageObject = (GameObject)Instantiate(stagenum[nextStage], new Vector3(0, -300,0), Quaternion.identity);
     */
         SceneManager.LoadScene(0);
-    } 
+    }
 }
