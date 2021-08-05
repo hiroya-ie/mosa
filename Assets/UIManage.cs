@@ -53,8 +53,6 @@ public class UIManage : MonoBehaviour
     public void TitleUIConfigClick()
     {
         SceneManagescript.ChangeScene(1); //1でconfig
-        Debug.Log (invert);
-        toggle.isOn = invert;
     }
     
     public void TitleUIExitClick()
@@ -87,7 +85,7 @@ public class UIManage : MonoBehaviour
     public void ConfigUIInvertClick()
     {
         invert = toggle.isOn;
-        Debug.Log (invert);
+        //Debug.Log (toggle.isOn);
         Character.GetComponent<CharacterMoveControl>().invert = invert;
     }
     
