@@ -1,0 +1,101 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow_NRM.png.meta
+guid: 246097575cec6d342a481127659e17d1
+labels:
+- GalacticStudios
+timeCreated: 1522407066
+=======
+guid: 9236635f319ab034fa33215e8eaa903a
+timeCreated: 1457640833
+>>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Dry.png.meta
+licenseType: Store
+TextureImporter:
+  fileIDToRecycleName: {}
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow_NRM.png.meta
+    enableMipMap: 1
+    linearTexture: 1
+    correctGamma: 0
+=======
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+>>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Dry.png.meta
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow_NRM.png.meta
+  maxTextureSize: 2048
+=======
+  maxTextureSize: 32
+>>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Dry.png.meta
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 1
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+<<<<<<< HEAD:Assets/Stage/Package/Ultra Skybox Fog/Textures/GrassMeadow_NRM.png.meta
+  textureType: 1
+  buildTargetSettings: []
+=======
+  textureType: 0
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 32
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 32
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+>>>>>>> main:Assets/BrokenVector/LowPolyTreePack/Textures/Colorsheet Tree Dry.png.meta
+  spriteSheet:
+    serializedVersion: 2
+    sprites: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
