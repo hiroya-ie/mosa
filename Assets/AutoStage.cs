@@ -19,11 +19,12 @@ public class AutoStage : MonoBehaviour
     int stage;
     [SerializeField] GameObject Fog;
     Color32 fogDesertColor = new Color32(204, 182, 155, 245);
-    Color32 fogForestColor = new Color32(255, 255, 255, 255);
+    Color32 fogForestColor = new Color32(255, 255, 255, 235);
 
     // Start is called before the first frame update
     void Start()
     {
+
         stage = Random.Range(0, 2);
         if (stage == 0)
         {
