@@ -8819,6 +8819,7 @@ MonoBehaviour:
   aheadStage: 5
   StageList:
   - {fileID: 0}
+  Fog: {fileID: 1381212396}
 --- !u!4 &756911365
 Transform:
   m_ObjectHideFlags: 0

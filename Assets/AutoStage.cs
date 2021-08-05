@@ -17,11 +17,26 @@ public class AutoStage : MonoBehaviour
     public int aheadStage; //事前に生成しておくステージ
     public List<GameObject> StageList = new List<GameObject>();//生成したステージのリスト
     int stage;
+    [SerializeField] GameObject Fog;
+    Color32 fogDesertColor = new Color32(204, 182, 155, 245);
+    Color32 fogForestColor = new Color32(255, 255, 255, 255);
 
     // Start is called before the first frame update
     void Start()
     {
         stage = Random.Range(0, 2);
+        if (stage == 0)
+        {
+            //砂漠ステージ
+
+            Fog.GetComponent<Renderer>().material.SetColor("_FogColor", fogDesertColor);
+        }
+        else if (stage == 1)
+        {
+            //森ステージ
+                        Fog.GetComponent<Renderer>().material.SetColor("_FogColor", fogForestColor);
+
+        }
         StageIndex = FirstStageIndex - 1;
         StageManager(aheadStage);
     }
