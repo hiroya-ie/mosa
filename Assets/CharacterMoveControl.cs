@@ -13,6 +13,8 @@ public class CharacterMoveControl : MonoBehaviour
     public float YSensitivity;
 
     bool isAcceleration;
+    float accelDuration = 1f;
+    [SerializeField] AnimationCurve accelRollCurve;
     //attitudeControl()用関数
     Vector3 basicAttitude;//基本姿勢
     Vector3 firstMousePosition;
@@ -107,7 +109,7 @@ public class CharacterMoveControl : MonoBehaviour
             return;
         }
 
-        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*3, Time.deltaTime*5);
+        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*1, Time.deltaTime*20);
         scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*5));
         scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
         Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
@@ -227,7 +229,7 @@ public class CharacterMoveControl : MonoBehaviour
 
         }
         FlyControl();
-
+        /*
         //ニアミス判定実験
         if (Input.GetKey("o"))
         {
@@ -237,6 +239,7 @@ public class CharacterMoveControl : MonoBehaviour
         {
             isNear = 2;//右(仮)
         }
+        */
 
     }
 
@@ -272,10 +275,12 @@ public class CharacterMoveControl : MonoBehaviour
 
         if (isAcceleration == true)
         {
-            characterPhysics.AddForce(transform.forward * 20000 * Time.deltaTime);
+            characterPhysics.AddForce(transform.forward * 10000 * Time.deltaTime);
+            float roll = accelRollCurve.Evaluate(accelCount / accelDuration) * -360;
+            body.transform.localRotation = Quaternion.Euler(0, 0, roll);
             accelCount += Time.deltaTime;
         }
-        if (accelCount > 0.6f)//加速終了（実験）
+        if (accelCount > accelDuration)//加速終了（実験）
         {
             isAcceleration = false;
         }
@@ -289,12 +294,13 @@ public class CharacterMoveControl : MonoBehaviour
 
         //スコア加算命令
         Camera.main.GetComponent<ScoreManage>().ScoreCalc(Vector3.Magnitude(characterPhysics.velocity)*Time.deltaTime);
-        MotionControl();
+        //MotionControl();
     }
     public void MotionControl()
     {
+
         //基本姿勢にニアミス時などのロール等モーションを加えた姿勢を演算し、キャラクターに反映する。動かすのは上半身のブロックのみで頭部と四肢の動きにはかかわらない。
-	    Animator animator = body.GetComponent<Animator>();
+	    /*Animator animator = body.GetComponent<Animator>();
         if (isNear == 1)
         {
             //左に回転
@@ -306,7 +312,7 @@ public class CharacterMoveControl : MonoBehaviour
             //右に回転
             animator.SetTrigger("RightRotation");
             isNear = 0;
-        }
+        }*/
                 
     }
 

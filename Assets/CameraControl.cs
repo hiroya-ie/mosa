@@ -12,7 +12,7 @@ public class CameraControl : MonoBehaviour
     float yVelocity;
     float zVelocity;
     float traceSpeed = 3f;
-    float TARGET_TRACE_SPEED = 0.3f;
+    float TARGET_TRACE_SPEED = 0.15f;
     float rotateSpeed = 5f;
     float TARGET_ROTATE_SPEED = 0.5f;
     Vector3 cameraPos;
@@ -46,7 +46,9 @@ public class CameraControl : MonoBehaviour
 
         if (isDead == false)
         {
-            cameraPos = playerPos - (playerVelocity / 6);
+            cameraPos = playerPos - (playerVelocity / 4);
+            //cameraPos = playerPos - playerVelocity.normalized/playerVelocity.magnitude;
+            Debug.Log(playerVelocity.magnitude);
             if (rotateSpeed > TARGET_ROTATE_SPEED)
             {
                 rotateSpeed -= Time.deltaTime;
