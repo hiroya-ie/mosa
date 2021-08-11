@@ -109,7 +109,7 @@ public class CharacterMoveControl : MonoBehaviour
             return;
         }
 
-        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*3, Time.deltaTime*5);
+        scoreDisplay.transform.position = Vector3.Lerp(scoreDisplay.transform.position, this.gameObject.transform.position+transform.right*1, Time.deltaTime*20);
         scoreDisplay.transform.rotation = Quaternion.LookRotation(scoreDisplay.transform.position - (Camera.main.transform.position+Camera.main.transform.forward*5));
         scoreDisplay.transform.Rotate(0, 0, currentScoreAngle);
         Vector3 characterAngleVector = new Vector3(Mathf.Cos(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(this.gameObject.transform.eulerAngles.z * Mathf.Deg2Rad), 0);
