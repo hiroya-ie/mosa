@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4484287, g: 0.49846184, b: 0.57562935, a: 1}
+  m_IndirectSpecularColor: {r: 0.4484281, g: 0.49846148, b: 0.575628, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19471,7 +19471,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 738657650}
         m_TargetAssemblyTypeName: UIManage, Assembly-CSharp
-        m_MethodName: TitleUIConfigClick
+        m_MethodName: MenuUIConfigClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
