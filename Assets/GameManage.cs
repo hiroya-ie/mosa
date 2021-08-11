@@ -21,7 +21,7 @@ public class GameManage : MonoBehaviour
         sceneManage = Camera.main.GetComponent<SceneManage>();
 
         //実験。ハイスコアのテスト。
-        (int highscore, int load_score, int operationMode, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
+        (int highscore, int load_score, int operationMode, int invert, float volumeSE, float volumeNoise, float VolumeBGM, int resolution, int effect, int weather, float XSensitivity, float YSensitivity) = Camera.main.GetComponent<DataManage>().LoadData();
         //highscoredisplay.GetComponent<TextMesh>().text = ("highscore:" + (int)highscore).ToString();
         highscoreText.text = highscore.ToString();
         //設定読み込み

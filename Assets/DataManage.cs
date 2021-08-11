@@ -8,7 +8,7 @@ public class DataManage : MonoBehaviour
      * データの管理を担う。
      */
     //https://gametukurikata.com/program/savedata
-    public void SaveData(int highscore=-1,int score = -1, int operationMode = -1, float volumeSE = -1, float volumeNoise = -1, float volumeBGM = -1, int resolution = -1, int effect = -1, int weather = -1,float XSensitivity = -1,float YSensitivity = -1)
+    public void SaveData(int highscore=-1,int score = -1, int operationMode = -1, int invert = -1, float volumeSE = -1, float volumeNoise = -1, float volumeBGM = -1, int resolution = -1, int effect = -1, int weather = -1,float XSensitivity = -1,float YSensitivity = -1)
      {
         /*
          * データをセーブする。
@@ -17,6 +17,7 @@ public class DataManage : MonoBehaviour
         if (highscore != -1) { PlayerPrefs.SetInt("highscore", highscore);}
         if (score != -1) { PlayerPrefs.SetInt("score", score);}
         if (operationMode != -1) { PlayerPrefs.SetInt("operationMode", operationMode);}
+        if (invert != -1) { PlayerPrefs.SetInt("invert", invert);}
         if (volumeSE != -1.0) { PlayerPrefs.SetFloat("volumeSE", volumeSE);}
         if (volumeNoise != -1.0) { PlayerPrefs.SetFloat("volumeNoise", volumeNoise);}
         if (volumeBGM != -1.0) { PlayerPrefs.SetFloat("volumeBGM", volumeBGM);}
@@ -27,7 +28,7 @@ public class DataManage : MonoBehaviour
         if (YSensitivity != -1.0) { PlayerPrefs.SetFloat("YSensitivity", XSensitivity);}
     }
 
-    public (int highscore,int score,int operationMode,float volumeSE,float volumeNoise,float VolumeBGM,int resolution,int effect,int weather,float XSensitivity,float YSensitivity) LoadData()
+    public (int highscore,int score,int operationMode, int invert, float volumeSE,float volumeNoise,float VolumeBGM,int resolution,int effect,int weather,float XSensitivity,float YSensitivity) LoadData()
     {
         /*
          * データをロードする
@@ -36,6 +37,7 @@ public class DataManage : MonoBehaviour
         int highscore = PlayerPrefs.GetInt("highscore", 0);
         int score = PlayerPrefs.GetInt("score", 0);
         int operationMode = PlayerPrefs.GetInt("operationMode", 1);
+        int invert = PlayerPrefs.GetInt("invert", 0);
         float volumeSE = PlayerPrefs.GetFloat("volumeSE", 50);
         float volumeNoise = PlayerPrefs.GetFloat("volumeNoise", 50);
         float volumeBGM = PlayerPrefs.GetFloat("volumeBGM", 50);
@@ -44,7 +46,7 @@ public class DataManage : MonoBehaviour
         int weather = PlayerPrefs.GetInt("weather", 1);
         float XSensitivity = PlayerPrefs.GetFloat("XSensitivity", 50);
         float YSensitivity = PlayerPrefs.GetFloat("YSensitivity", 50);
-        return (highscore,score,operationMode,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
+        return (highscore,score,operationMode,invert,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
     }
 
     public void ResetData()
@@ -52,6 +54,7 @@ public class DataManage : MonoBehaviour
         PlayerPrefs.DeleteKey("highscore");
         PlayerPrefs.DeleteKey("score");
         PlayerPrefs.DeleteKey("operationMode");
+        PlayerPrefs.DeleteKey("invert");
         PlayerPrefs.DeleteKey("volumeSE");
         PlayerPrefs.DeleteKey("volumeNoise");
         PlayerPrefs.DeleteKey("volumeBGM");
