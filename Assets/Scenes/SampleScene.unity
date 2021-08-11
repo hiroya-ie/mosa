@@ -449,6 +449,11 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &14398994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3432534120491811381, guid: ba64cf6f8d561eb4e9a300c1a63671c2, type: 3}
+  m_PrefabInstance: {fileID: 1762141033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &51632225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,8 +2133,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 1828819241}
   m_HandleRect: {fileID: 1350649577}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -7821,8 +7826,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 1972104130}
   m_HandleRect: {fileID: 1178739326}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -8105,8 +8110,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1549377843}
   m_HandleRect: {fileID: 1549377842}
   m_Direction: 2
-  m_Value: 0.6617924
-  m_Size: 0.5999999
+  m_Value: 0.6617923
+  m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8416,6 +8421,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 44.441, y: -64.625, z: -25.802}
+--- !u!1 &722779489 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3432534120491811381, guid: ba64cf6f8d561eb4e9a300c1a63671c2, type: 3}
+  m_PrefabInstance: {fileID: 2024619964}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &723409517
 GameObject:
   m_ObjectHideFlags: 0
@@ -8613,15 +8623,18 @@ MonoBehaviour:
   resolution: 0
   effect: 0
   weather: 0
+  invert: 0
   volumeSE: 0
   volumeNoise: 0
   volumeBGM: 0
   XSensitivity: 0
   YSensitivity: 0
-  invert: 0
+  invertBool: 0
   MainCamera: {fileID: 963194225}
   Character: {fileID: 51632225}
   fog: {fileID: 1381212396}
+  trail: {fileID: 722779489}
+  trail1: {fileID: 14398994}
   toggle: {fileID: 1528663468}
   standardButton: {fileID: 1874499035}
   expertButton: {fileID: 779946524}
@@ -15879,7 +15892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17942,7 +17955,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 738657650}
+        m_TargetAssemblyTypeName: UIManage, Assembly-CSharp
+        m_MethodName: ConfigUIEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1395304100
 MonoBehaviour:
@@ -18670,7 +18695,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &1543036111
 GameObject:
   m_ObjectHideFlags: 0

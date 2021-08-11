@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 public class UIManage : MonoBehaviour
 {
@@ -26,7 +26,6 @@ public class UIManage : MonoBehaviour
         SoundManagescript = MainCamera.GetComponent<SoundManage>();
         
         (highscore,score,operationMode,invert,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity) = DataManagescript.LoadData();//全変数へデータロード
-        Debug.Log(effect);
         
         invertToinvertBool();//int型からbool型へ
                 
@@ -34,7 +33,6 @@ public class UIManage : MonoBehaviour
         SoundManagescript.SEAccelerateAudioSource.volume = volumeSE;
         SoundManagescript.SECrashAudioSource.volume = volumeSE;
         //SoundManagescript.BGMAudioSource.volume = volumeBGM;
-
         
         Character.GetComponent<CharacterMoveControl>().operationMode = operationMode;
         //Character.GetComponent<CharacterMoveControl>().invert = invert;
@@ -47,8 +45,20 @@ public class UIManage : MonoBehaviour
         XSlider.value = XSensitivity;
         YSlider.value = YSensitivity;
         
+        //Debug.Log(effect);
         ConfigUIEffectRef();
         toggle.isOn = invertBool;
+        
+        if (operationMode==0)
+        {
+            standardButton.GetComponent<Image>().color=Color.black;
+            expertButton.GetComponent<Image>().color=Color.white;
+        }
+        else
+        {
+            standardButton.GetComponent<Image>().color=Color.white;
+            expertButton.GetComponent<Image>().color=Color.black;
+        }
         
     }
     
@@ -134,26 +144,26 @@ public class UIManage : MonoBehaviour
     
     public void ConfigUISensitivityXSlide()
     {
-        XSensitivity = XSlider.normalizedValue * 100;
+        XSensitivity = XSlider.normalizedValue*100;
+        //Debug.Log(XSensitivity);
         Character.GetComponent<CharacterMoveControl>().XSensitivity = XSensitivity;
     }
     
     public void ConfigUISensitivityYSlide()
     {
-        YSensitivity = YSlider.normalizedValue * 100;
+        YSensitivity = YSlider.normalizedValue*100;
         Character.GetComponent<CharacterMoveControl>().YSensitivity = YSensitivity;
     }
     
     public void ConfigUIReturnClick()
     {
+        //Debug.Log(XSensitivity);
         DataManagescript.SaveData(highscore,score,operationMode,invert,volumeSE,volumeNoise,volumeBGM,resolution,effect,weather,XSensitivity,YSensitivity);
         if (SceneManagescript.isContinue){SceneManagescript.ChangeScene(3);}
         else 
         {
             SceneManagescript.ChangeScene(0);
             //Debug.Log (SceneManagescript.isContinue);
-            SceneManager.LoadScene("SampleScene");
-            //Debug.Log (effect);
         }
     }
     
@@ -183,11 +193,9 @@ public class UIManage : MonoBehaviour
         {
             case 0:
                 fog.SetActive(true);
-                Debug.Log (Effect.value);
                 break;
             case 1:
                 fog.SetActive(false);
-                Debug.Log (Effect.value);
                 break;
             case 2:
                 fog.SetActive(false);
