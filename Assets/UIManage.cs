@@ -184,7 +184,22 @@ public class UIManage : MonoBehaviour
         }
     }
     
-    public void ConfigUIEffect(){effect = Effect.value;}
+    public void ConfigUIEffect()
+    {
+        effect = Effect.value;
+        switch(effect)
+        {
+            case 0:
+                fog.SetActive(true);
+                break;
+            case 1:
+                fog.SetActive(false);
+                break;
+            case 2:
+                fog.SetActive(false);
+                break;
+        }
+    }
     
     public void ConfigUIEffectRef()
     {
