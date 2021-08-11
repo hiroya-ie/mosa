@@ -13,7 +13,7 @@ public class CharacterMoveControl : MonoBehaviour
     public float YSensitivity;
 
     bool isAcceleration;
-    float accelDuration = 2f;
+    float accelDuration = 1f;
     [SerializeField] AnimationCurve accelRollCurve;
     //attitudeControl()ópä÷êî
     Vector3 basicAttitude;//äÓñ{épê®
@@ -276,8 +276,7 @@ public class CharacterMoveControl : MonoBehaviour
         if (isAcceleration == true)
         {
             characterPhysics.AddForce(transform.forward * 10000 * Time.deltaTime);
-            //Debug.Log();
-            float roll = accelRollCurve.Evaluate(accelCount / accelDuration) * 360;
+            float roll = accelRollCurve.Evaluate(accelCount / accelDuration) * -360;
             body.transform.localRotation = Quaternion.Euler(0, 0, roll);
             accelCount += Time.deltaTime;
         }
