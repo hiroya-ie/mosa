@@ -3,7 +3,11 @@ guid: 9cb8cd49997472140b7dae7396959d73
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sky1: {fileID: 2100000, guid: f5af6bc8517c9e444874c624ff784b42, type: 2}
+  - sky2: {fileID: 2100000, guid: 85ca331d228789c4c8bfb4e8bed734fd, type: 2}
+  - Target: {instanceID: 0}
+  - Fog: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

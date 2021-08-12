@@ -9,6 +9,7 @@ public class AutoStage : MonoBehaviour
 
     int StageSize = 1000;
     int StageIndex;
+    public Material sky1, sky2;
 
     public Transform Target;//Unitychan
     public GameObject[] stagenum;//ステージのプレハブ
@@ -31,15 +32,17 @@ public class AutoStage : MonoBehaviour
             //砂漠ステージ
 
             Fog.GetComponent<Renderer>().material.SetColor("_FogColor", fogDesertColor);
+            RenderSettings.skybox = sky1;
         }
         else if (stage == 1)
         {
             //森ステージ
-                        Fog.GetComponent<Renderer>().material.SetColor("_FogColor", fogForestColor);
+            Fog.GetComponent<Renderer>().material.SetColor("_FogColor", fogForestColor);
+            RenderSettings.skybox = sky2;
 
         }
         StageIndex = FirstStageIndex - 1;
-        StageManager(aheadStage);
+        StageManager(aheadStage);   
     }
 
     // Update is called once per frame

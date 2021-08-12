@@ -22,7 +22,7 @@ public class Fog : MonoBehaviour
 
         Vector3 pos = myTransform.position;
 
-        pos.y = targetPosIndex.y - 80;
+        pos.y = targetPosIndex.y - 100;
         pos.z = targetPosIndex.z;
 
         myTransform.position = pos;

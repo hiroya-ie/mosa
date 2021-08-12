@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4484281, g: 0.49846148, b: 0.575628, a: 1}
+  m_IndirectSpecularColor: {r: 0.4484287, g: 0.49846184, b: 0.57562935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7517,7 +7517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2653524, g: 0.38175327, b: 0.6320754, a: 1}
+  m_Color: {r: 0.07778571, g: 0.6183625, b: 0.7169812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8862,6 +8862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb8cd49997472140b7dae7396959d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sky1: {fileID: 2100000, guid: f5af6bc8517c9e444874c624ff784b42, type: 2}
+  sky2: {fileID: 2100000, guid: 85ca331d228789c4c8bfb4e8bed734fd, type: 2}
   Target: {fileID: 963194228}
   stagenum:
   - {fileID: 1010834529903772089, guid: c988ae755993bac4aa818d251eacf3b0, type: 3}
@@ -14601,7 +14603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.28764686, g: 0.3480408, b: 0.6037736, a: 1}
+  m_Color: {r: 0.078431375, g: 0.61960787, b: 0.7176471, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
